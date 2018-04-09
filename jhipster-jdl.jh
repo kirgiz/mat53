@@ -1,0 +1,142 @@
+entity Company {
+Code String maxlength(10) required,
+Name String maxlength(60) required,
+Comments String maxlength(500)
+}
+
+entity Country {
+IsoCode String maxlength(3) required,
+Name String maxlength(60) required
+}
+
+entity Currency {
+IsoCode String maxlength(3) required,
+Name String maxlength(60) required
+}
+
+entity Forexrates {
+Rate_Date LocalDate required,
+StraighRate Double required
+}
+
+entity Thirdclassification {
+Code String maxlength(3) required,
+Name String maxlength(60) required,
+Comments String maxlength(500)
+}
+
+entity Third {
+Code String maxlength(3) required,
+Name String maxlength(60) required,
+Comments String maxlength(500)
+}
+
+entity Addressclassification {
+Code String maxlength(3) required,
+Name String maxlength(60) required,
+Comments String maxlength(500)
+}
+
+
+entity Address {
+Description String maxlength(200)
+Line1 String maxlength(80) required,
+Line2 String maxlength(80) ,
+Line3 String maxlength(80) ,
+Line4 String maxlength(80) ,
+ZipCode String maxlength(10) ,
+State String maxlength(80) ,
+ValidFrom LocalDate,
+ValidTo LocalDate,
+Comments String maxlength(500)
+}
+
+entity Civility {
+Code String maxlength(3) required,
+Name String maxlength(60) required,
+Comments String maxlength(500)
+}
+
+entity Transferclassification {
+Code String maxlength(3) required,
+Name String maxlength(60) required,
+IsOutgoingTransfer Boolean required,
+IsIncomingTransfer Boolean required,
+IsInternalTransfer Boolean required,
+Comments String maxlength(500)
+}
+
+entity Materialclassification{
+Code String maxlength(20) required,
+Name String maxlength(60) required,
+Comments String maxlength(500)
+}
+
+entity Lot{
+Code String maxlength(20) required,
+Description String maxlength(200) required,
+CreationDate LocalDate required,
+NumberOfItems Long required,
+Comments String maxlength(500),
+UnitBuyPrice Double
+}
+
+entity Material{
+Code String maxlength(20) required,
+Description String maxlength(200) required,
+CreationDate LocalDate required,
+Comments String maxlength(500)
+}
+
+
+entity Materialhistory{
+Code String maxlength(20),
+CreationDate LocalDate required,
+Price Double,
+Comments String maxlength(500)
+}
+
+entity Dashboard{
+TransferDate LocalDate required,
+ProfitAndLoss Double,
+NumberOfItems Long
+}
+
+relationship OneToMany {
+Currency{companyBaseCurrency} to Company{baseCurrency(Name)  required},
+Currency{currencyRate} to Forexrates{rateForCurrency(Name)  required},
+Thirdclassification{thirdCategory} to Third{thirdClassif(Name) required},
+Addressclassification{addressCategory} to Address{addressClassif(Name) required},
+Transferclassification{materialhistoryCategory} to Materialhistory{TransferClassif(Name) required},
+Materialclassification{materialCategory} to Material{MaterialTypeDef(Name) required},
+Currency{materialBuyCurrency} to Material{buycurrency(IsoCode) required},
+Currency{materialSellCurrency} to Material{Sellcurrency(IsoCode) required},
+Currency{lotBuyCurrency} to Lot{buycurrencylot(ISOCode) required},
+Third{materialhistoryfrom} to Materialhistory{warehousefrom(Name) required},
+Third{materialhistoryto} to Materialhistory{Warehouseto(Name) required},
+Civility{thirdCivility} to Third{civilityClassif(Name) required},
+Lot{materialLot} to Material{lotIdentifier(Code) required},
+Materialclassification{materialCateg} to Material{materialClassif(Code) required},
+Country{addressCountry} to Address{CountryAddress(Name)},
+Materialclassification{materialCat} to Material{MaterialTypeCat(Name) required},
+Third{WarehouseOut} to Dashboard{WarehouseOutg(Name) required},
+Materialclassification{materialCategoryDashboard} to Dashboard{MaterialTypeDefDashboard(Code) required}
+}
+
+
+relationship ManyToMany {
+Materialhistory{itemTransfered} to Material,
+Third{addressthird} to Address{thirdaddress(Name)}
+}
+
+
+paginate Thirdclassification, Company, Country , Currency , Thirdclassification, Addressclassification, Transferclassification , Materialclassification with infinite-scroll
+paginate Lot, Material, Materialhistory  with pagination
+
+dto * with mapstruct
+
+service all with serviceClass
+
+angularSuffix * with StockAndSalesUtility
+
+search * with elasticsearch 
