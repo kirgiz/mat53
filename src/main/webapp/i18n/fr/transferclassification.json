@@ -1,0 +1,28 @@
+{
+    "matv53App": {
+        "transferclassification" : {
+            "home": {
+                "title": "Transferclassifications",
+                "createLabel": "Créer un nouveau Transferclassification",
+                "createOrEditLabel": "Créer ou éditer un Transferclassification",
+                "search": "Recherche pour Transferclassification"
+            },
+            "created": "Un nouveau Transferclassification a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Transferclassification avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Transferclassification avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Transferclassification {{ id }} ?"
+            },
+            "detail": {
+                "title": "Transferclassification"
+            },
+            "code": "Code",
+            "name": "Name",
+            "isOutgoingTransfer": "Is Outgoing Transfer",
+            "isIncomingTransfer": "Is Incoming Transfer",
+            "isInternalTransfer": "Is Internal Transfer",
+            "comments": "Comments",
+            "materialhistoryCategory": "Materialhistory Category"
+        }
+    }
+}

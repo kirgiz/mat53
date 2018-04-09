@@ -1,0 +1,99 @@
+<div>
+    <h2>
+        <span jhiTranslate="matv53App.address.home.title">Addresses</span>
+        <button class="btn btn-primary float-right jh-create-entity create-address-stock-and-sales-utility" [routerLink]="['/', { outlets: { popup: ['address-stock-and-sales-utility-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="matv53App.address.home.createLabel">
+            Create new Address
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'matv53App.address.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="addresses">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="matv53App.address.description">Description</span></th>
+            <th><span jhiTranslate="matv53App.address.line1">Line 1</span></th>
+            <th><span jhiTranslate="matv53App.address.line2">Line 2</span></th>
+            <th><span jhiTranslate="matv53App.address.line3">Line 3</span></th>
+            <th><span jhiTranslate="matv53App.address.line4">Line 4</span></th>
+            <th><span jhiTranslate="matv53App.address.zipCode">Zip Code</span></th>
+            <th><span jhiTranslate="matv53App.address.state">State</span></th>
+            <th><span jhiTranslate="matv53App.address.validFrom">Valid From</span></th>
+            <th><span jhiTranslate="matv53App.address.validTo">Valid To</span></th>
+            <th><span jhiTranslate="matv53App.address.comments">Comments</span></th>
+            <th><span jhiTranslate="matv53App.address.addressClassif">Address Classif</span></th>
+            <th><span jhiTranslate="matv53App.address.countryAddress">Country Address</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let address of addresses ;trackBy: trackId">
+                <td><a [routerLink]="['../address-stock-and-sales-utility', address.id ]">{{address.id}}</a></td>
+                <td>{{address.description}}</td>
+                <td>{{address.line1}}</td>
+                <td>{{address.line2}}</td>
+                <td>{{address.line3}}</td>
+                <td>{{address.line4}}</td>
+                <td>{{address.zipCode}}</td>
+                <td>{{address.state}}</td>
+                <td>{{address.validFrom | date:'mediumDate'}}</td>
+                <td>{{address.validTo | date:'mediumDate'}}</td>
+                <td>{{address.comments}}</td>
+                <td>
+                    <div *ngIf="address.addressClassifId">
+                        <a [routerLink]="['../addressclassification-stock-and-sales-utility', address.addressClassifId  ]" >{{address.addressClassifName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="address.countryAddressId">
+                        <a [routerLink]="['../country-stock-and-sales-utility', address.countryAddressId  ]" >{{address.countryAddressName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../address-stock-and-sales-utility', address.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'address-stock-and-sales-utility/'+ address.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'address-stock-and-sales-utility/'+ address.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

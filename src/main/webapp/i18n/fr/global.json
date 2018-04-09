@@ -7,6 +7,21 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entités",
+                "companyStockAndSalesUtility": "Company",
+                "countryStockAndSalesUtility": "Country",
+                "currencyStockAndSalesUtility": "Currency",
+                "forexratesStockAndSalesUtility": "Forexrates",
+                "thirdclassificationStockAndSalesUtility": "Thirdclassification",
+                "thirdStockAndSalesUtility": "Third",
+                "addressclassificationStockAndSalesUtility": "Addressclassification",
+                "addressStockAndSalesUtility": "Address",
+                "civilityStockAndSalesUtility": "Civility",
+                "transferclassificationStockAndSalesUtility": "Transferclassification",
+                "materialclassificationStockAndSalesUtility": "Materialclassification",
+                "lotStockAndSalesUtility": "Lot",
+                "materialStockAndSalesUtility": "Material",
+                "materialhistoryStockAndSalesUtility": "Materialhistory",
+                "dashboardStockAndSalesUtility": "Dashboard",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

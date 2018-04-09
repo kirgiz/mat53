@@ -1,0 +1,28 @@
+{
+    "matv53App": {
+        "materialclassification" : {
+            "home": {
+                "title": "Materialclassifications",
+                "createLabel": "Create a new Materialclassification",
+                "createOrEditLabel": "Create or edit a Materialclassification",
+                "search": "Search for Materialclassification"
+            },
+            "created": "A new Materialclassification is created with identifier {{ param }}",
+            "updated": "A Materialclassification is updated with identifier {{ param }}",
+            "deleted": "A Materialclassification is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Materialclassification {{ id }}?"
+            },
+            "detail": {
+                "title": "Materialclassification"
+            },
+            "code": "Code",
+            "name": "Name",
+            "comments": "Comments",
+            "materialCategory": "Material Category",
+            "materialCateg": "Material Categ",
+            "materialCat": "Material Cat",
+            "materialCategoryDashboard": "Material Category Dashboard"
+        }
+    }
+}

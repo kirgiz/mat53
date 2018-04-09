@@ -1,0 +1,119 @@
+<div>
+    <h2>
+        <span jhiTranslate="matv53App.material.home.title">Materials</span>
+        <button class="btn btn-primary float-right jh-create-entity create-material-stock-and-sales-utility" [routerLink]="['/', { outlets: { popup: ['material-stock-and-sales-utility-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="matv53App.material.home.createLabel">
+            Create new Material
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'matv53App.material.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="materials">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="code"><span jhiTranslate="matv53App.material.code">Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="description"><span jhiTranslate="matv53App.material.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="creationDate"><span jhiTranslate="matv53App.material.creationDate">Creation Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="comments"><span jhiTranslate="matv53App.material.comments">Comments</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="materialTypeDefName"><span jhiTranslate="matv53App.material.materialTypeDef">Material Type Def</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="buycurrencyIsoCode"><span jhiTranslate="matv53App.material.buycurrency">Buycurrency</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="sellcurrencyIsoCode"><span jhiTranslate="matv53App.material.sellcurrency">Sellcurrency</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lotIdentifierCode"><span jhiTranslate="matv53App.material.lotIdentifier">Lot Identifier</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="materialClassifCode"><span jhiTranslate="matv53App.material.materialClassif">Material Classif</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="materialTypeCatName"><span jhiTranslate="matv53App.material.materialTypeCat">Material Type Cat</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let material of materials ;trackBy: trackId">
+                <td><a [routerLink]="['../material-stock-and-sales-utility', material.id ]">{{material.id}}</a></td>
+                <td>{{material.code}}</td>
+                <td>{{material.description}}</td>
+                <td>{{material.creationDate | date:'mediumDate'}}</td>
+                <td>{{material.comments}}</td>
+                <td>
+                    <div *ngIf="material.materialTypeDefId">
+                        <a [routerLink]="['../materialclassification-stock-and-sales-utility', material.materialTypeDefId  ]" >{{material.materialTypeDefName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="material.buycurrencyId">
+                        <a [routerLink]="['../currency-stock-and-sales-utility', material.buycurrencyId  ]" >{{material.buycurrencyIsoCode}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="material.sellcurrencyId">
+                        <a [routerLink]="['../currency-stock-and-sales-utility', material.sellcurrencyId  ]" >{{material.sellcurrencyIsoCode}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="material.lotIdentifierId">
+                        <a [routerLink]="['../lot-stock-and-sales-utility', material.lotIdentifierId  ]" >{{material.lotIdentifierCode}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="material.materialClassifId">
+                        <a [routerLink]="['../materialclassification-stock-and-sales-utility', material.materialClassifId  ]" >{{material.materialClassifCode}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="material.materialTypeCatId">
+                        <a [routerLink]="['../materialclassification-stock-and-sales-utility', material.materialTypeCatId  ]" >{{material.materialTypeCatName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../material-stock-and-sales-utility', material.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'material-stock-and-sales-utility/'+ material.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'material-stock-and-sales-utility/'+ material.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="materials && materials.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [maxSize]="5" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

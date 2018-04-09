@@ -1,0 +1,34 @@
+{
+    "matv53App": {
+        "address" : {
+            "home": {
+                "title": "Addresses",
+                "createLabel": "Créer un nouveau Address",
+                "createOrEditLabel": "Créer ou éditer un Address",
+                "search": "Recherche pour Address"
+            },
+            "created": "Un nouveau Address a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Address avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Address avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Address {{ id }} ?"
+            },
+            "detail": {
+                "title": "Address"
+            },
+            "description": "Description",
+            "line1": "Line 1",
+            "line2": "Line 2",
+            "line3": "Line 3",
+            "line4": "Line 4",
+            "zipCode": "Zip Code",
+            "state": "State",
+            "validFrom": "Valid From",
+            "validTo": "Valid To",
+            "comments": "Comments",
+            "addressClassif": "Address Classif",
+            "countryAddress": "Country Address",
+            "thirdaddress": "Thirdaddress"
+        }
+    }
+}

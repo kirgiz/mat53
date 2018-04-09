@@ -1,0 +1,29 @@
+{
+    "matv53App": {
+        "lot" : {
+            "home": {
+                "title": "Lots",
+                "createLabel": "Create a new Lot",
+                "createOrEditLabel": "Create or edit a Lot",
+                "search": "Search for Lot"
+            },
+            "created": "A new Lot is created with identifier {{ param }}",
+            "updated": "A Lot is updated with identifier {{ param }}",
+            "deleted": "A Lot is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Lot {{ id }}?"
+            },
+            "detail": {
+                "title": "Lot"
+            },
+            "code": "Code",
+            "description": "Description",
+            "creationDate": "Creation Date",
+            "numberOfItems": "Number Of Items",
+            "comments": "Comments",
+            "unitBuyPrice": "Unit Buy Price",
+            "materialLot": "Material Lot",
+            "buycurrencylot": "Buycurrencylot"
+        }
+    }
+}

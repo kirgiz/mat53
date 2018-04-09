@@ -1,0 +1,31 @@
+{
+    "matv53App": {
+        "material" : {
+            "home": {
+                "title": "Materials",
+                "createLabel": "Create a new Material",
+                "createOrEditLabel": "Create or edit a Material",
+                "search": "Search for Material"
+            },
+            "created": "A new Material is created with identifier {{ param }}",
+            "updated": "A Material is updated with identifier {{ param }}",
+            "deleted": "A Material is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Material {{ id }}?"
+            },
+            "detail": {
+                "title": "Material"
+            },
+            "code": "Code",
+            "description": "Description",
+            "creationDate": "Creation Date",
+            "comments": "Comments",
+            "materialTypeDef": "Material Type Def",
+            "buycurrency": "Buycurrency",
+            "sellcurrency": "Sellcurrency",
+            "lotIdentifier": "Lot Identifier",
+            "materialClassif": "Material Classif",
+            "materialTypeCat": "Material Type Cat"
+        }
+    }
+}

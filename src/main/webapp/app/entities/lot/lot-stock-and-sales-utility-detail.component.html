@@ -1,0 +1,51 @@
+
+<div *ngIf="lot">
+    <h2><span jhiTranslate="matv53App.lot.detail.title">Lot</span> {{lot.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="matv53App.lot.code">Code</span></dt>
+        <dd>
+            <span>{{lot.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.lot.description">Description</span></dt>
+        <dd>
+            <span>{{lot.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.lot.creationDate">Creation Date</span></dt>
+        <dd>
+            <span>{{lot.creationDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.lot.numberOfItems">Number Of Items</span></dt>
+        <dd>
+            <span>{{lot.numberOfItems}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.lot.comments">Comments</span></dt>
+        <dd>
+            <span>{{lot.comments}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.lot.unitBuyPrice">Unit Buy Price</span></dt>
+        <dd>
+            <span>{{lot.unitBuyPrice}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.lot.buycurrencylot">Buycurrencylot</span></dt>
+        <dd>
+            <div *ngIf="lot.buycurrencylotId">
+                <a [routerLink]="['/currency-stock-and-sales-utility', lot.buycurrencylotId]">{{lot.buycurrencylotIsoCode}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'lot-stock-and-sales-utility/'+ lot.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

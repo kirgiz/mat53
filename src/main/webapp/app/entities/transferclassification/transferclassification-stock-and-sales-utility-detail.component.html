@@ -1,0 +1,45 @@
+
+<div *ngIf="transferclassification">
+    <h2><span jhiTranslate="matv53App.transferclassification.detail.title">Transferclassification</span> {{transferclassification.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="matv53App.transferclassification.code">Code</span></dt>
+        <dd>
+            <span>{{transferclassification.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.transferclassification.name">Name</span></dt>
+        <dd>
+            <span>{{transferclassification.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.transferclassification.isOutgoingTransfer">Is Outgoing Transfer</span></dt>
+        <dd>
+            <span>{{transferclassification.isOutgoingTransfer}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.transferclassification.isIncomingTransfer">Is Incoming Transfer</span></dt>
+        <dd>
+            <span>{{transferclassification.isIncomingTransfer}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.transferclassification.isInternalTransfer">Is Internal Transfer</span></dt>
+        <dd>
+            <span>{{transferclassification.isInternalTransfer}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.transferclassification.comments">Comments</span></dt>
+        <dd>
+            <span>{{transferclassification.comments}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'transferclassification-stock-and-sales-utility/'+ transferclassification.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

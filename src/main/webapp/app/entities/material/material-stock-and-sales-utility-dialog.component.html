@@ -1,0 +1,160 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myMaterialLabel" jhiTranslate="matv53App.material.home.createOrEditLabel">Create or edit a Material</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!material.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="material.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.code" for="field_code">Code</label>
+            <input type="text" class="form-control" name="code" id="field_code"
+                [(ngModel)]="material.code" required maxlength="20" />
+            <div [hidden]="!(editForm.controls.code?.dirty && editForm.controls.code?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.code?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.code?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+                   This field cannot be longer than 20 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.description" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="material.description" required maxlength="200" />
+            <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.description?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.description?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 200 }">
+                   This field cannot be longer than 200 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.creationDate" for="field_creationDate">Creation Date</label>
+            <div class="input-group">
+                <input id="field_creationDate" type="text" class="form-control" name="creationDate" ngbDatepicker  #creationDateDp="ngbDatepicker" [(ngModel)]="material.creationDate"
+                required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary" (click)="creationDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <div [hidden]="!(editForm.controls.creationDate?.dirty && editForm.controls.creationDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.creationDate?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.comments" for="field_comments">Comments</label>
+            <input type="text" class="form-control" name="comments" id="field_comments"
+                [(ngModel)]="material.comments" maxlength="500" />
+            <div [hidden]="!(editForm.controls.comments?.dirty && editForm.controls.comments?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.comments?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 500 }">
+                   This field cannot be longer than 500 characters.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.materialTypeDef" for="field_materialTypeDef">Material Type Def</label>
+            <select class="form-control" id="field_materialTypeDef" name="materialTypeDef" [(ngModel)]="material.materialTypeDefId"  required>
+                <option *ngIf="!editForm.value.materialTypeDef" [ngValue]="null" selected></option>
+                <option [ngValue]="materialclassificationOption.id" *ngFor="let materialclassificationOption of materialclassifications; trackBy: trackMaterialclassificationById">{{materialclassificationOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.materialTypeDef?.dirty && editForm.controls.materialTypeDef?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.materialTypeDef?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.buycurrency" for="field_buycurrency">Buycurrency</label>
+            <select class="form-control" id="field_buycurrency" name="buycurrency" [(ngModel)]="material.buycurrencyId"  required>
+                <option *ngIf="!editForm.value.buycurrency" [ngValue]="null" selected></option>
+                <option [ngValue]="currencyOption.id" *ngFor="let currencyOption of currencies; trackBy: trackCurrencyById">{{currencyOption.isoCode}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.buycurrency?.dirty && editForm.controls.buycurrency?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.buycurrency?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.sellcurrency" for="field_sellcurrency">Sellcurrency</label>
+            <select class="form-control" id="field_sellcurrency" name="sellcurrency" [(ngModel)]="material.sellcurrencyId"  required>
+                <option *ngIf="!editForm.value.sellcurrency" [ngValue]="null" selected></option>
+                <option [ngValue]="currencyOption.id" *ngFor="let currencyOption of currencies; trackBy: trackCurrencyById">{{currencyOption.isoCode}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.sellcurrency?.dirty && editForm.controls.sellcurrency?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.sellcurrency?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.lotIdentifier" for="field_lotIdentifier">Lot Identifier</label>
+            <select class="form-control" id="field_lotIdentifier" name="lotIdentifier" [(ngModel)]="material.lotIdentifierId"  required>
+                <option *ngIf="!editForm.value.lotIdentifier" [ngValue]="null" selected></option>
+                <option [ngValue]="lotOption.id" *ngFor="let lotOption of lots; trackBy: trackLotById">{{lotOption.code}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.lotIdentifier?.dirty && editForm.controls.lotIdentifier?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.lotIdentifier?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.materialClassif" for="field_materialClassif">Material Classif</label>
+            <select class="form-control" id="field_materialClassif" name="materialClassif" [(ngModel)]="material.materialClassifId"  required>
+                <option *ngIf="!editForm.value.materialClassif" [ngValue]="null" selected></option>
+                <option [ngValue]="materialclassificationOption.id" *ngFor="let materialclassificationOption of materialclassifications; trackBy: trackMaterialclassificationById">{{materialclassificationOption.code}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.materialClassif?.dirty && editForm.controls.materialClassif?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.materialClassif?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.material.materialTypeCat" for="field_materialTypeCat">Material Type Cat</label>
+            <select class="form-control" id="field_materialTypeCat" name="materialTypeCat" [(ngModel)]="material.materialTypeCatId"  required>
+                <option *ngIf="!editForm.value.materialTypeCat" [ngValue]="null" selected></option>
+                <option [ngValue]="materialclassificationOption.id" *ngFor="let materialclassificationOption of materialclassifications; trackBy: trackMaterialclassificationById">{{materialclassificationOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.materialTypeCat?.dirty && editForm.controls.materialTypeCat?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.materialTypeCat?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

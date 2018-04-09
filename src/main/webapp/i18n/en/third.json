@@ -1,0 +1,30 @@
+{
+    "matv53App": {
+        "third" : {
+            "home": {
+                "title": "Thirds",
+                "createLabel": "Create a new Third",
+                "createOrEditLabel": "Create or edit a Third",
+                "search": "Search for Third"
+            },
+            "created": "A new Third is created with identifier {{ param }}",
+            "updated": "A Third is updated with identifier {{ param }}",
+            "deleted": "A Third is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Third {{ id }}?"
+            },
+            "detail": {
+                "title": "Third"
+            },
+            "code": "Code",
+            "name": "Name",
+            "comments": "Comments",
+            "materialhistoryfrom": "Materialhistoryfrom",
+            "materialhistoryto": "Materialhistoryto",
+            "warehouseOut": "Warehouse Out",
+            "addressthird": "Addressthird",
+            "thirdClassif": "Third Classif",
+            "civilityClassif": "Civility Classif"
+        }
+    }
+}

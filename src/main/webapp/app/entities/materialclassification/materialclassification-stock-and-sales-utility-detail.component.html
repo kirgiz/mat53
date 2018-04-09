@@ -1,0 +1,33 @@
+
+<div *ngIf="materialclassification">
+    <h2><span jhiTranslate="matv53App.materialclassification.detail.title">Materialclassification</span> {{materialclassification.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="matv53App.materialclassification.code">Code</span></dt>
+        <dd>
+            <span>{{materialclassification.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.materialclassification.name">Name</span></dt>
+        <dd>
+            <span>{{materialclassification.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.materialclassification.comments">Comments</span></dt>
+        <dd>
+            <span>{{materialclassification.comments}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'materialclassification-stock-and-sales-utility/'+ materialclassification.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

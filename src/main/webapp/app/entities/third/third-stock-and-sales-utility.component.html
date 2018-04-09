@@ -1,0 +1,91 @@
+<div>
+    <h2>
+        <span jhiTranslate="matv53App.third.home.title">Thirds</span>
+        <button class="btn btn-primary float-right jh-create-entity create-third-stock-and-sales-utility" [routerLink]="['/', { outlets: { popup: ['third-stock-and-sales-utility-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="matv53App.third.home.createLabel">
+            Create new Third
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'matv53App.third.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="thirds">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="matv53App.third.code">Code</span></th>
+            <th><span jhiTranslate="matv53App.third.name">Name</span></th>
+            <th><span jhiTranslate="matv53App.third.comments">Comments</span></th>
+            <th><span jhiTranslate="matv53App.third.addressthird">Addressthird</span></th>
+            <th><span jhiTranslate="matv53App.third.thirdClassif">Third Classif</span></th>
+            <th><span jhiTranslate="matv53App.third.civilityClassif">Civility Classif</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let third of thirds ;trackBy: trackId">
+                <td><a [routerLink]="['../third-stock-and-sales-utility', third.id ]">{{third.id}}</a></td>
+                <td>{{third.code}}</td>
+                <td>{{third.name}}</td>
+                <td>{{third.comments}}</td>
+                <td>
+                    <span *ngFor="let addressthird of third.addressthirds; let last = last">
+                            <a class="form-control-static" [routerLink]="['../address-stock-and-sales-utility', addressthird?.id ]">{{addressthird.id}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <div *ngIf="third.thirdClassifId">
+                        <a [routerLink]="['../thirdclassification-stock-and-sales-utility', third.thirdClassifId  ]" >{{third.thirdClassifName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="third.civilityClassifId">
+                        <a [routerLink]="['../civility-stock-and-sales-utility', third.civilityClassifId  ]" >{{third.civilityClassifName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../third-stock-and-sales-utility', third.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'third-stock-and-sales-utility/'+ third.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'third-stock-and-sales-utility/'+ third.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

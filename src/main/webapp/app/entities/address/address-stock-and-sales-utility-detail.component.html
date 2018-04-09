@@ -1,0 +1,73 @@
+
+<div *ngIf="address">
+    <h2><span jhiTranslate="matv53App.address.detail.title">Address</span> {{address.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="matv53App.address.description">Description</span></dt>
+        <dd>
+            <span>{{address.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.line1">Line 1</span></dt>
+        <dd>
+            <span>{{address.line1}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.line2">Line 2</span></dt>
+        <dd>
+            <span>{{address.line2}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.line3">Line 3</span></dt>
+        <dd>
+            <span>{{address.line3}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.line4">Line 4</span></dt>
+        <dd>
+            <span>{{address.line4}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.zipCode">Zip Code</span></dt>
+        <dd>
+            <span>{{address.zipCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.state">State</span></dt>
+        <dd>
+            <span>{{address.state}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.validFrom">Valid From</span></dt>
+        <dd>
+            <span>{{address.validFrom | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.validTo">Valid To</span></dt>
+        <dd>
+            <span>{{address.validTo | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.comments">Comments</span></dt>
+        <dd>
+            <span>{{address.comments}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.addressClassif">Address Classif</span></dt>
+        <dd>
+            <div *ngIf="address.addressClassifId">
+                <a [routerLink]="['/addressclassification-stock-and-sales-utility', address.addressClassifId]">{{address.addressClassifName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="matv53App.address.countryAddress">Country Address</span></dt>
+        <dd>
+            <div *ngIf="address.countryAddressId">
+                <a [routerLink]="['/country-stock-and-sales-utility', address.countryAddressId]">{{address.countryAddressName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'address-stock-and-sales-utility/'+ address.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

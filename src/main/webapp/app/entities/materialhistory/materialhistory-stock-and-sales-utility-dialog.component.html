@@ -1,0 +1,113 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myMaterialhistoryLabel" jhiTranslate="matv53App.materialhistory.home.createOrEditLabel">Create or edit a Materialhistory</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!materialhistory.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="materialhistory.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.materialhistory.code" for="field_code">Code</label>
+            <input type="text" class="form-control" name="code" id="field_code"
+                [(ngModel)]="materialhistory.code" maxlength="20" />
+            <div [hidden]="!(editForm.controls.code?.dirty && editForm.controls.code?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.code?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+                   This field cannot be longer than 20 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.materialhistory.creationDate" for="field_creationDate">Creation Date</label>
+            <div class="input-group">
+                <input id="field_creationDate" type="text" class="form-control" name="creationDate" ngbDatepicker  #creationDateDp="ngbDatepicker" [(ngModel)]="materialhistory.creationDate"
+                required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary" (click)="creationDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <div [hidden]="!(editForm.controls.creationDate?.dirty && editForm.controls.creationDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.creationDate?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.materialhistory.price" for="field_price">Price</label>
+            <input type="number" class="form-control" name="price" id="field_price"
+                [(ngModel)]="materialhistory.price"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.materialhistory.comments" for="field_comments">Comments</label>
+            <input type="text" class="form-control" name="comments" id="field_comments"
+                [(ngModel)]="materialhistory.comments" maxlength="500" />
+            <div [hidden]="!(editForm.controls.comments?.dirty && editForm.controls.comments?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.comments?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 500 }">
+                   This field cannot be longer than 500 characters.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="matv53App.materialhistory.itemTransfered" for="field_itemTransfered">Item Transfered</label>
+            <select class="form-control" id="field_itemTransfered" multiple name="itemTransfered" [(ngModel)]="materialhistory.itemTransfereds">
+                <option [ngValue]="getSelected(materialhistory.itemTransfereds, materialOption)" *ngFor="let materialOption of materials; trackBy: trackMaterialById">{{materialOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.materialhistory.transferClassif" for="field_transferClassif">Transfer Classif</label>
+            <select class="form-control" id="field_transferClassif" name="transferClassif" [(ngModel)]="materialhistory.transferClassifId"  required>
+                <option *ngIf="!editForm.value.transferClassif" [ngValue]="null" selected></option>
+                <option [ngValue]="transferclassificationOption.id" *ngFor="let transferclassificationOption of transferclassifications; trackBy: trackTransferclassificationById">{{transferclassificationOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.transferClassif?.dirty && editForm.controls.transferClassif?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.transferClassif?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.materialhistory.warehousefrom" for="field_warehousefrom">Warehousefrom</label>
+            <select class="form-control" id="field_warehousefrom" name="warehousefrom" [(ngModel)]="materialhistory.warehousefromId"  required>
+                <option *ngIf="!editForm.value.warehousefrom" [ngValue]="null" selected></option>
+                <option [ngValue]="thirdOption.id" *ngFor="let thirdOption of thirds; trackBy: trackThirdById">{{thirdOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.warehousefrom?.dirty && editForm.controls.warehousefrom?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.warehousefrom?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.materialhistory.warehouseto" for="field_warehouseto">Warehouseto</label>
+            <select class="form-control" id="field_warehouseto" name="warehouseto" [(ngModel)]="materialhistory.warehousetoId"  required>
+                <option *ngIf="!editForm.value.warehouseto" [ngValue]="null" selected></option>
+                <option [ngValue]="thirdOption.id" *ngFor="let thirdOption of thirds; trackBy: trackThirdById">{{thirdOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.warehouseto?.dirty && editForm.controls.warehouseto?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.warehouseto?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

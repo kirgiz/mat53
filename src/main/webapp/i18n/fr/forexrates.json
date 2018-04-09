@@ -1,0 +1,24 @@
+{
+    "matv53App": {
+        "forexrates" : {
+            "home": {
+                "title": "Forexrates",
+                "createLabel": "Créer un nouveau Forexrates",
+                "createOrEditLabel": "Créer ou éditer un Forexrates",
+                "search": "Recherche pour Forexrates"
+            },
+            "created": "Un nouveau Forexrates a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Forexrates avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Forexrates avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Forexrates {{ id }} ?"
+            },
+            "detail": {
+                "title": "Forexrates"
+            },
+            "rateDate": "Rate Date",
+            "straighRate": "Straigh Rate",
+            "rateForCurrency": "Rate For Currency"
+        }
+    }
+}

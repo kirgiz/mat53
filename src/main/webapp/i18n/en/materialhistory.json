@@ -1,0 +1,29 @@
+{
+    "matv53App": {
+        "materialhistory" : {
+            "home": {
+                "title": "Materialhistories",
+                "createLabel": "Create a new Materialhistory",
+                "createOrEditLabel": "Create or edit a Materialhistory",
+                "search": "Search for Materialhistory"
+            },
+            "created": "A new Materialhistory is created with identifier {{ param }}",
+            "updated": "A Materialhistory is updated with identifier {{ param }}",
+            "deleted": "A Materialhistory is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Materialhistory {{ id }}?"
+            },
+            "detail": {
+                "title": "Materialhistory"
+            },
+            "code": "Code",
+            "creationDate": "Creation Date",
+            "price": "Price",
+            "comments": "Comments",
+            "itemTransfered": "Item Transfered",
+            "transferClassif": "Transfer Classif",
+            "warehousefrom": "Warehousefrom",
+            "warehouseto": "Warehouseto"
+        }
+    }
+}

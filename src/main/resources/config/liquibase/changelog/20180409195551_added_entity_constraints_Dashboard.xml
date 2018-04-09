@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Dashboard.
+    -->
+    <changeSet id="20180409195551-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="warehouse_outg_id"
+                                 baseTableName="dashboard"
+                                 constraintName="fk_dashboard_warehouse_outg_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="third"/>
+
+        <addForeignKeyConstraint baseColumnNames="material_type_def_dashboard_id"
+                                 baseTableName="dashboard"
+                                 constraintName="fk_dashboard_material_type_def_dashboard_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="materialclassification"/>
+
+    </changeSet>
+</databaseChangeLog>

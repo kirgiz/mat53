@@ -1,0 +1,73 @@
+
+<div *ngIf="material">
+    <h2><span jhiTranslate="matv53App.material.detail.title">Material</span> {{material.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="matv53App.material.code">Code</span></dt>
+        <dd>
+            <span>{{material.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.material.description">Description</span></dt>
+        <dd>
+            <span>{{material.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.material.creationDate">Creation Date</span></dt>
+        <dd>
+            <span>{{material.creationDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.material.comments">Comments</span></dt>
+        <dd>
+            <span>{{material.comments}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.material.materialTypeDef">Material Type Def</span></dt>
+        <dd>
+            <div *ngIf="material.materialTypeDefId">
+                <a [routerLink]="['/materialclassification-stock-and-sales-utility', material.materialTypeDefId]">{{material.materialTypeDefName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="matv53App.material.buycurrency">Buycurrency</span></dt>
+        <dd>
+            <div *ngIf="material.buycurrencyId">
+                <a [routerLink]="['/currency-stock-and-sales-utility', material.buycurrencyId]">{{material.buycurrencyIsoCode}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="matv53App.material.sellcurrency">Sellcurrency</span></dt>
+        <dd>
+            <div *ngIf="material.sellcurrencyId">
+                <a [routerLink]="['/currency-stock-and-sales-utility', material.sellcurrencyId]">{{material.sellcurrencyIsoCode}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="matv53App.material.lotIdentifier">Lot Identifier</span></dt>
+        <dd>
+            <div *ngIf="material.lotIdentifierId">
+                <a [routerLink]="['/lot-stock-and-sales-utility', material.lotIdentifierId]">{{material.lotIdentifierCode}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="matv53App.material.materialClassif">Material Classif</span></dt>
+        <dd>
+            <div *ngIf="material.materialClassifId">
+                <a [routerLink]="['/materialclassification-stock-and-sales-utility', material.materialClassifId]">{{material.materialClassifCode}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="matv53App.material.materialTypeCat">Material Type Cat</span></dt>
+        <dd>
+            <div *ngIf="material.materialTypeCatId">
+                <a [routerLink]="['/materialclassification-stock-and-sales-utility', material.materialTypeCatId]">{{material.materialTypeCatName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'material-stock-and-sales-utility/'+ material.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

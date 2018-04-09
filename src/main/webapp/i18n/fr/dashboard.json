@@ -1,0 +1,26 @@
+{
+    "matv53App": {
+        "dashboard" : {
+            "home": {
+                "title": "Dashboards",
+                "createLabel": "Créer un nouveau Dashboard",
+                "createOrEditLabel": "Créer ou éditer un Dashboard",
+                "search": "Recherche pour Dashboard"
+            },
+            "created": "Un nouveau Dashboard a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Dashboard avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Dashboard avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Dashboard {{ id }} ?"
+            },
+            "detail": {
+                "title": "Dashboard"
+            },
+            "transferDate": "Transfer Date",
+            "profitAndLoss": "Profit And Loss",
+            "numberOfItems": "Number Of Items",
+            "warehouseOutg": "Warehouse Outg",
+            "materialTypeDefDashboard": "Material Type Def Dashboard"
+        }
+    }
+}

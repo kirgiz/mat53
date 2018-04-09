@@ -1,0 +1,25 @@
+{
+    "matv53App": {
+        "addressclassification" : {
+            "home": {
+                "title": "Addressclassifications",
+                "createLabel": "Créer un nouveau Addressclassification",
+                "createOrEditLabel": "Créer ou éditer un Addressclassification",
+                "search": "Recherche pour Addressclassification"
+            },
+            "created": "Un nouveau Addressclassification a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Addressclassification avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Addressclassification avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Addressclassification {{ id }} ?"
+            },
+            "detail": {
+                "title": "Addressclassification"
+            },
+            "code": "Code",
+            "name": "Name",
+            "comments": "Comments",
+            "addressCategory": "Address Category"
+        }
+    }
+}

@@ -111,7 +111,7 @@ Transferclassification{materialhistoryCategory} to Materialhistory{TransferClass
 Materialclassification{materialCategory} to Material{MaterialTypeDef(Name) required},
 Currency{materialBuyCurrency} to Material{buycurrency(IsoCode) required},
 Currency{materialSellCurrency} to Material{Sellcurrency(IsoCode) required},
-Currency{lotBuyCurrency} to Lot{buycurrencylot(ISOCode) required},
+Currency{lotBuyCurrency} to Lot{buycurrencylot(IsoCode) required},
 Third{materialhistoryfrom} to Materialhistory{warehousefrom(Name) required},
 Third{materialhistoryto} to Materialhistory{Warehouseto(Name) required},
 Civility{thirdCivility} to Third{civilityClassif(Name) required},

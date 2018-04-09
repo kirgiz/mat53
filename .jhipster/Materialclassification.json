@@ -1,0 +1,65 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "materialCategory",
+            "otherEntityName": "material",
+            "otherEntityRelationshipName": "materialTypeDef"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "materialCateg",
+            "otherEntityName": "material",
+            "otherEntityRelationshipName": "materialClassif"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "materialCat",
+            "otherEntityName": "material",
+            "otherEntityRelationshipName": "materialTypeCat"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "materialCategoryDashboard",
+            "otherEntityName": "dashboard",
+            "otherEntityRelationshipName": "materialTypeDefDashboard"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "code",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required"
+            ],
+            "fieldValidateRulesMaxlength": 20
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required"
+            ],
+            "fieldValidateRulesMaxlength": 60
+        },
+        {
+            "fieldName": "comments",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 500
+        }
+    ],
+    "changelogDate": "20180409195547",
+    "entityTableName": "materialclassification",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "searchEngine": "elasticsearch",
+    "angularJSSuffix": "StockAndSalesUtility"
+}

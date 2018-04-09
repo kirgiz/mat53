@@ -1,0 +1,77 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myDashboardLabel" jhiTranslate="matv53App.dashboard.home.createOrEditLabel">Create or edit a Dashboard</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!dashboard.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="dashboard.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.dashboard.transferDate" for="field_transferDate">Transfer Date</label>
+            <div class="input-group">
+                <input id="field_transferDate" type="text" class="form-control" name="transferDate" ngbDatepicker  #transferDateDp="ngbDatepicker" [(ngModel)]="dashboard.transferDate"
+                required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary" (click)="transferDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <div [hidden]="!(editForm.controls.transferDate?.dirty && editForm.controls.transferDate?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.transferDate?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.dashboard.profitAndLoss" for="field_profitAndLoss">Profit And Loss</label>
+            <input type="number" class="form-control" name="profitAndLoss" id="field_profitAndLoss"
+                [(ngModel)]="dashboard.profitAndLoss"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.dashboard.numberOfItems" for="field_numberOfItems">Number Of Items</label>
+            <input type="number" class="form-control" name="numberOfItems" id="field_numberOfItems"
+                [(ngModel)]="dashboard.numberOfItems"  />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.dashboard.warehouseOutg" for="field_warehouseOutg">Warehouse Outg</label>
+            <select class="form-control" id="field_warehouseOutg" name="warehouseOutg" [(ngModel)]="dashboard.warehouseOutgId"  required>
+                <option *ngIf="!editForm.value.warehouseOutg" [ngValue]="null" selected></option>
+                <option [ngValue]="thirdOption.id" *ngFor="let thirdOption of thirds; trackBy: trackThirdById">{{thirdOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.warehouseOutg?.dirty && editForm.controls.warehouseOutg?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.warehouseOutg?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.dashboard.materialTypeDefDashboard" for="field_materialTypeDefDashboard">Material Type Def Dashboard</label>
+            <select class="form-control" id="field_materialTypeDefDashboard" name="materialTypeDefDashboard" [(ngModel)]="dashboard.materialTypeDefDashboardId"  required>
+                <option *ngIf="!editForm.value.materialTypeDefDashboard" [ngValue]="null" selected></option>
+                <option [ngValue]="materialclassificationOption.id" *ngFor="let materialclassificationOption of materialclassifications; trackBy: trackMaterialclassificationById">{{materialclassificationOption.code}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.materialTypeDefDashboard?.dirty && editForm.controls.materialTypeDefDashboard?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.materialTypeDefDashboard?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

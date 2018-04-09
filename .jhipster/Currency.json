@@ -1,0 +1,63 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "companyBaseCurrency",
+            "otherEntityName": "company",
+            "otherEntityRelationshipName": "baseCurrency"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "currencyRate",
+            "otherEntityName": "forexrates",
+            "otherEntityRelationshipName": "rateForCurrency"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "materialBuyCurrency",
+            "otherEntityName": "material",
+            "otherEntityRelationshipName": "buycurrency"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "materialSellCurrency",
+            "otherEntityName": "material",
+            "otherEntityRelationshipName": "sellcurrency"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "lotBuyCurrency",
+            "otherEntityName": "lot",
+            "otherEntityRelationshipName": "buycurrencylot"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "isoCode",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required"
+            ],
+            "fieldValidateRulesMaxlength": 3
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required"
+            ],
+            "fieldValidateRulesMaxlength": 60
+        }
+    ],
+    "changelogDate": "20180409195539",
+    "entityTableName": "currency",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "searchEngine": "elasticsearch",
+    "angularJSSuffix": "StockAndSalesUtility"
+}

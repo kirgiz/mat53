@@ -1,0 +1,25 @@
+{
+    "matv53App": {
+        "thirdclassification" : {
+            "home": {
+                "title": "Thirdclassifications",
+                "createLabel": "Créer un nouveau Thirdclassification",
+                "createOrEditLabel": "Créer ou éditer un Thirdclassification",
+                "search": "Recherche pour Thirdclassification"
+            },
+            "created": "Un nouveau Thirdclassification a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Thirdclassification avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Thirdclassification avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Thirdclassification {{ id }} ?"
+            },
+            "detail": {
+                "title": "Thirdclassification"
+            },
+            "code": "Code",
+            "name": "Name",
+            "comments": "Comments",
+            "thirdCategory": "Third Category"
+        }
+    }
+}

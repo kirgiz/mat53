@@ -1,0 +1,33 @@
+
+<div *ngIf="civility">
+    <h2><span jhiTranslate="matv53App.civility.detail.title">Civility</span> {{civility.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="matv53App.civility.code">Code</span></dt>
+        <dd>
+            <span>{{civility.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.civility.name">Name</span></dt>
+        <dd>
+            <span>{{civility.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.civility.comments">Comments</span></dt>
+        <dd>
+            <span>{{civility.comments}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'civility-stock-and-sales-utility/'+ civility.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

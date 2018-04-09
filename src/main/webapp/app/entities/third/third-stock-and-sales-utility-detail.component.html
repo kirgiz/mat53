@@ -1,0 +1,51 @@
+
+<div *ngIf="third">
+    <h2><span jhiTranslate="matv53App.third.detail.title">Third</span> {{third.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="matv53App.third.code">Code</span></dt>
+        <dd>
+            <span>{{third.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.third.name">Name</span></dt>
+        <dd>
+            <span>{{third.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.third.comments">Comments</span></dt>
+        <dd>
+            <span>{{third.comments}}</span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.third.addressthird">Addressthird</span></dt>
+        <dd>
+            <span *ngFor="let addressthird of third.addressthirds; let last = last">
+                <a [routerLink]="['/address-stock-and-sales-utility', addressthird?.id ]">{{addressthird.id}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="matv53App.third.thirdClassif">Third Classif</span></dt>
+        <dd>
+            <div *ngIf="third.thirdClassifId">
+                <a [routerLink]="['/thirdclassification-stock-and-sales-utility', third.thirdClassifId]">{{third.thirdClassifName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="matv53App.third.civilityClassif">Civility Classif</span></dt>
+        <dd>
+            <div *ngIf="third.civilityClassifId">
+                <a [routerLink]="['/civility-stock-and-sales-utility', third.civilityClassifId]">{{third.civilityClassifName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'third-stock-and-sales-utility/'+ third.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

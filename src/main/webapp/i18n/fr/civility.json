@@ -1,0 +1,25 @@
+{
+    "matv53App": {
+        "civility" : {
+            "home": {
+                "title": "Civilities",
+                "createLabel": "Créer un nouveau Civility",
+                "createOrEditLabel": "Créer ou éditer un Civility",
+                "search": "Recherche pour Civility"
+            },
+            "created": "Un nouveau Civility a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Civility avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Civility avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Civility {{ id }} ?"
+            },
+            "detail": {
+                "title": "Civility"
+            },
+            "code": "Code",
+            "name": "Name",
+            "comments": "Comments",
+            "thirdCivility": "Third Civility"
+        }
+    }
+}

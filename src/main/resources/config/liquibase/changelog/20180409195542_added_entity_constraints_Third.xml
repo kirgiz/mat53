@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Third.
+    -->
+    <changeSet id="20180409195542-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="thirds_id"
+                                 baseTableName="third_addressthird"
+                                 constraintName="fk_third_addressthird_thirds_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="third"/>
+        <addForeignKeyConstraint baseColumnNames="addressthirds_id"
+                                 baseTableName="third_addressthird"
+                                 constraintName="fk_third_addressthird_addressthirds_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="address"/>
+        
+        <addForeignKeyConstraint baseColumnNames="third_classif_id"
+                                 baseTableName="third"
+                                 constraintName="fk_third_third_classif_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="thirdclassification"/>
+
+        <addForeignKeyConstraint baseColumnNames="civility_classif_id"
+                                 baseTableName="third"
+                                 constraintName="fk_third_civility_classif_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="civility"/>
+
+    </changeSet>
+</databaseChangeLog>
