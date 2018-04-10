@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response } from '@angular/http'
+import { HttpClient, HttpResponse } from '@angular/common/http';
+
 import { Observable } from 'rxjs/Rx';
 import { SERVER_API_URL } from '../../app.constants';
 
@@ -8,13 +10,22 @@ import { JhiDateUtils } from 'ng-jhipster';
 import { DashboardStockAndSalesUtility } from './dashboard-stock-and-sales-utility.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 
+import { MaterialhistoryStockAndSalesUtility, MaterialhistoryStockAndSalesUtilityService } from '../materialhistory';
+import {ThirdStockAndSalesUtilityService, ThirdStockAndSalesUtility} from '../third';
+import {ForexratesStockAndSalesUtilityService, ForexratesStockAndSalesUtility} from '../forexrates';
+import {LotStockAndSalesUtilityService, LotStockAndSalesUtility} from '../lot';
+
 @Injectable()
 export class DashboardStockAndSalesUtilityService {
 
     private resourceUrl = SERVER_API_URL + 'api/dashboards';
     private resourceSearchUrl = SERVER_API_URL + 'api/_search/dashboards';
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+    constructor(private http: Http, private dateUtils: JhiDateUtils,
+        private matHistoryService: MaterialhistoryStockAndSalesUtilityService,
+        private lotService: LotStockAndSalesUtilityService,
+    private fxRatesService: ForexratesStockAndSalesUtilityService,
+    private thirdService: ThirdStockAndSalesUtilityService) { }
 
     create(dashboard: DashboardStockAndSalesUtility): Observable<DashboardStockAndSalesUtility> {
         const copy = this.convert(dashboard);
@@ -44,6 +55,10 @@ export class DashboardStockAndSalesUtilityService {
         return this.http.get(this.resourceUrl, options)
             .map((res: Response) => this.convertResponse(res));
     }
+
+    queryMaterialHistory(req?: any): Observable<ResponseWrapper> {
+        return this.matHistoryService.query();
+}
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
