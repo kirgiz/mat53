@@ -56,6 +56,8 @@ export class MaterialhistoryStockAndSalesUtilityDialogComponent implements OnIni
     }
 
     save() {
+      console.log('dsfsdfdsfdsfsdfsf');
+      console.log(this.materialhistory.creationDate);
         this.isSaving = true;
         if (this.materialhistory.id !== undefined) {
             this.subscribeToSaveResponse(

@@ -27,16 +27,18 @@ export class DashboardStockAndSalesUtilityService {
     private fxRatesService: ForexratesStockAndSalesUtilityService,
     private thirdService: ThirdStockAndSalesUtilityService) { }
 
-    create(dashboard: DashboardStockAndSalesUtility): Observable<DashboardStockAndSalesUtility> {
-        const copy = this.convert(dashboard);
+    create(dashboard: DashboardStockAndSalesUtility,convertDate: boolean): Observable<DashboardStockAndSalesUtility> {
+        const copy = this.convert(dashboard,convertDate);
+        console.log('dfsfsdfsdfsdfsdfsdfsfdsdfsdfsdfsdjjjjjjjjjjjjjjjjjjjjjjjj');
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });
     }
 
+
     update(dashboard: DashboardStockAndSalesUtility): Observable<DashboardStockAndSalesUtility> {
-        const copy = this.convert(dashboard);
+        const copy = this.convert(dashboard,true);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
@@ -92,10 +94,15 @@ export class DashboardStockAndSalesUtilityService {
     /**
      * Convert a DashboardStockAndSalesUtility to a JSON which can be sent to the server.
      */
-    private convert(dashboard: DashboardStockAndSalesUtility): DashboardStockAndSalesUtility {
+    private convert(dashboard: DashboardStockAndSalesUtility,convertDate: boolean): DashboardStockAndSalesUtility {
         const copy: DashboardStockAndSalesUtility = Object.assign({}, dashboard);
+        if (convertDate) {
         copy.transferDate = this.dateUtils
             .convertLocalDateToServer(dashboard.transferDate);
+        }
+        else {
+            copy.transferDate=dashboard.transferDate
+        }
         return copy;
     }
 }

@@ -56,7 +56,7 @@ export class DashboardStockAndSalesUtilityDialogComponent implements OnInit {
                 this.dashboardService.update(this.dashboard));
         } else {
             this.subscribeToSaveResponse(
-                this.dashboardService.create(this.dashboard));
+                this.dashboardService.create(this.dashboard,true));
         }
     }
 
