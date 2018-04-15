@@ -46,12 +46,15 @@
                 <td>{{dashboard.numberOfItems}}</td>
                 <td>
                     <div *ngIf="dashboard.warehouseOutgId">
-                            <a [routerLink]="['../third-stock-and-sales-utility', dashboard.warehouseOutgId  ]" >{{dashboard.warehouseOutgName}}</a>                   
+                          <!--  <a [routerLink]="['../third-stock-and-sales-utility', dashboard.warehouseOutgId  ]" >{{dashboard.warehouseOutgName}}
+                          -->{{dashboard.warehouseOutgId}} <!--</a>  -->                 
                     </div>
                 </td>
                 <td>
                     <div *ngIf="dashboard.materialTypeDefDashboardId">
-                        <a [routerLink]="['../materialclassification-stock-and-sales-utility', dashboard.materialTypeDefDashboardId  ]" >{{dashboard.materialTypeDefDashboardCode}}</a>
+                     <!--    <a [routerLink]="['../materialclassification-stock-and-sales-utility', dashboard.materialTypeDefDashboardId  ]" > {{dashboard.materialTypeDefDashboardCode}}-->
+                            {{dashboard.materialTypeDefDashboardId}}
+                      <!--  </a> -->
                     </div>
                 </td>
                 <td class="text-right">
