@@ -33,6 +33,7 @@ export class DashboardStockAndSalesUtilityService {
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
+            //rsg
         });
     }
 
