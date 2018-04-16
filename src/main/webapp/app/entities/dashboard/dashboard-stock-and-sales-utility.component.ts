@@ -65,8 +65,8 @@ const dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String
                                dashboardMap.set(key, transferSummary);
             } else {
                 const currentSummary: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(
-                    transferDateYYYYMM, materialTransfer.creationDate, materialTransfer.price, 1, 1102 //materialTransfer.warehousefromId
-                    , 1201);
+                    transferDateYYYYMM, materialTransfer.creationDate, materialTransfer.price, 1, 1151 //materialTransfer.warehousefromId
+                    , 1251);
                     dashboardMap.set(key, currentSummary);
             }
             }
