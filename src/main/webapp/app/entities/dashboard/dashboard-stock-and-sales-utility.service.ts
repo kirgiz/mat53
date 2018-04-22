@@ -26,7 +26,8 @@ export class DashboardStockAndSalesUtilityService {
         private matHistoryService: MaterialhistoryStockAndSalesUtilityService,
         private lotService: LotStockAndSalesUtilityService,
     private fxRatesService: ForexratesStockAndSalesUtilityService,
-    private thirdService: ThirdStockAndSalesUtilityService) { }
+    private thirdService: ThirdStockAndSalesUtilityService,
+private materialService: MaterialStockAndSalesUtilityService) { }
 
     create(dashboard: DashboardStockAndSalesUtility, convertDate: boolean): Observable<DashboardStockAndSalesUtility> {
         const copy = this.convert(dashboard ,convertDate);
@@ -34,7 +35,6 @@ export class DashboardStockAndSalesUtilityService {
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
-            //rsg
         });
     }
 
@@ -62,6 +62,10 @@ export class DashboardStockAndSalesUtilityService {
 
     queryMaterialHistory(req?: any): Observable<ResponseWrapper> {
         return this.matHistoryService.query();
+}
+
+queryMaterial(id: number): Observable<MaterialStockAndSalesUtility> {
+    return this.materialService.find(id);
 }
 
     delete(id: number): Observable<Response> {
