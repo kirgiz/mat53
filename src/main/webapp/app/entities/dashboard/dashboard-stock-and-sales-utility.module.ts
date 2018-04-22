@@ -19,6 +19,7 @@ import {MaterialhistoryStockAndSalesUtilityService} from '../materialhistory';
 import {ThirdStockAndSalesUtilityService} from '../third';
 import {ForexratesStockAndSalesUtilityService} from '../forexrates';
 import {LotStockAndSalesUtilityService} from '../lot';
+import {MaterialStockAndSalesUtilityService} from '../material';
 
 const ENTITY_STATES = [
     ...dashboardRoute,
@@ -51,7 +52,8 @@ const ENTITY_STATES = [
         MaterialhistoryStockAndSalesUtilityService,
         ThirdStockAndSalesUtilityService,
         ForexratesStockAndSalesUtilityService,
-        LotStockAndSalesUtilityService
+        LotStockAndSalesUtilityService,
+        MaterialStockAndSalesUtilityService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

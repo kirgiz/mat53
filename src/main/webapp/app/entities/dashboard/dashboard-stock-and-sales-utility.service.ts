@@ -14,6 +14,7 @@ import { MaterialhistoryStockAndSalesUtility, MaterialhistoryStockAndSalesUtilit
 import {ThirdStockAndSalesUtilityService, ThirdStockAndSalesUtility} from '../third';
 import {ForexratesStockAndSalesUtilityService, ForexratesStockAndSalesUtility} from '../forexrates';
 import {LotStockAndSalesUtilityService, LotStockAndSalesUtility} from '../lot';
+import {MaterialStockAndSalesUtilityService, MaterialStockAndSalesUtility} from '../material';
 
 @Injectable()
 export class DashboardStockAndSalesUtilityService {
@@ -27,8 +28,8 @@ export class DashboardStockAndSalesUtilityService {
     private fxRatesService: ForexratesStockAndSalesUtilityService,
     private thirdService: ThirdStockAndSalesUtilityService) { }
 
-    create(dashboard: DashboardStockAndSalesUtility,convertDate: boolean): Observable<DashboardStockAndSalesUtility> {
-        const copy = this.convert(dashboard,convertDate);
+    create(dashboard: DashboardStockAndSalesUtility, convertDate: boolean): Observable<DashboardStockAndSalesUtility> {
+        const copy = this.convert(dashboard ,convertDate);
         console.log('dfsfsdfsdfsdfsdfsdfsfdsdfsdfsdfsdjjjjjjjjjjjjjjjjjjjjjjjj');
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();

@@ -16,11 +16,11 @@
             "detail": {
                 "title": "Dashboard"
             },
-            "transferDate": "Transfer Date",
-            "profitAndLoss": "Profit And Loss",
-            "numberOfItems": "Number Of Items",
-            "warehouseOutg": "Warehouse Outg",
-            "materialTypeDefDashboard": "Material Type Def Dashboard"
+            "transferDate": "Date (Jour/Mois)",
+            "profitAndLoss": "Perte/Profit",
+            "numberOfItems": "Nombre D'éléments",
+            "warehouseOutg": "Tiers Sortie",
+            "materialTypeDefDashboard": "Type de Matériel"
         }
     }
 }
