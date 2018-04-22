@@ -8,6 +8,7 @@ import { DashboardStockAndSalesUtilityService } from './dashboard-stock-and-sale
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { MaterialhistoryStockAndSalesUtility } from '../materialhistory';
 import {ThirdStockAndSalesUtilityService} from '../third';
+import {MaterialStockAndSalesUtility} from '../material';
 
 @Component({
     selector: 'jhi-dashboard-stock-and-sales-utility',
@@ -46,8 +47,6 @@ export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy
        this.dashboardService.queryMaterialHistory().subscribe(
         (res: ResponseWrapper) => {
             this.transfers = res.json;
-            console.log('HHHHHHHHHHHHHHH');
-            console.log(res.json);
 this.summary = new Map();
 const dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String , DashboardStockAndSalesUtility>();
             this.dashboards = new Array<DashboardStockAndSalesUtility>();
@@ -56,12 +55,17 @@ const dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String
                                const transferDateYYYYMM = parseInt((String)(transferDate.getFullYear().toString()).concat((String)(transferDate.getMonth().toString())), 10);
                                console.log((String)(transferDate.getFullYear().toString()));
                               const  key = (String)(transferDateYYYYMM.toString()).concat((String)(materialTransfer.warehousefromId.toString()));
+                             for (const material of materialTransfer.itemTransfereds){
+                                console.log(material.id);
+                                this.dashboardService.queryMaterial(material.id).subscribe(
+                                    (res1: MaterialStockAndSalesUtility) => {
+                                        console.log('gsfgdfgfhjghjgjhgj');
+                                    console.log(res1.materialClassifId)});
+                             }
                               if (dashboardMap.has(key)) {
                                 const transferSummary: DashboardStockAndSalesUtility = dashboardMap.get(key);
                                   transferSummary.numberOfItems = transferSummary.numberOfItems + 1;
                                   transferSummary.profitAndLoss = transferSummary.profitAndLoss + materialTransfer.price;
-                                  transferSummary.materialTypeDefDashboardId = 1201;
-                                  transferSummary.warehouseOutgId = 1102;
                                dashboardMap.set(key, transferSummary);
             } else {
                 const currentSummary: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(
@@ -71,15 +75,12 @@ const dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String
             }
             }
             for (const dashboardItem of Array.from(dashboardMap.values())) {
-                console.log('OOOOOOOOOOOOOOOH');
-                console.log(dashboardItem.transferDate);
                 dashboardItem.profitAndLoss = dashboardItem.profitAndLoss / dashboardItem.numberOfItems;
               dashboardItem.id = null;
                     this.dashboardService.create(dashboardItem, false).subscribe(
                         (res1: DashboardStockAndSalesUtility) => {
                         const dash: DashboardStockAndSalesUtility = res1;
-                         this.dashboards.push(dash); console.log('gnééééé');
-                          console.log(dash.id);
+                         this.dashboards.push(dash); 
                      },
                        (res1: ResponseWrapper) => this.onError(res1.json));
               }
