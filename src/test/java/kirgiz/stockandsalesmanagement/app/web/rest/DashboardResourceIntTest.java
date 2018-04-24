@@ -55,6 +55,9 @@ public class DashboardResourceIntTest {
     private static final Long DEFAULT_NUMBER_OF_ITEMS = 1L;
     private static final Long UPDATED_NUMBER_OF_ITEMS = 2L;
 
+    private static final Double DEFAULT_CURRENCY = 1D;
+    private static final Double UPDATED_CURRENCY = 2D;
+
     @Autowired
     private DashboardRepository dashboardRepository;
 
@@ -104,7 +107,8 @@ public class DashboardResourceIntTest {
         Dashboard dashboard = new Dashboard()
             .transferDate(DEFAULT_TRANSFER_DATE)
             .profitAndLoss(DEFAULT_PROFIT_AND_LOSS)
-            .numberOfItems(DEFAULT_NUMBER_OF_ITEMS);
+            .numberOfItems(DEFAULT_NUMBER_OF_ITEMS)
+            .currency(DEFAULT_CURRENCY);
         // Add required entity
         Third warehouseOutg = ThirdResourceIntTest.createEntity(em);
         em.persist(warehouseOutg);
@@ -143,6 +147,7 @@ public class DashboardResourceIntTest {
         assertThat(testDashboard.getTransferDate()).isEqualTo(DEFAULT_TRANSFER_DATE);
         assertThat(testDashboard.getProfitAndLoss()).isEqualTo(DEFAULT_PROFIT_AND_LOSS);
         assertThat(testDashboard.getNumberOfItems()).isEqualTo(DEFAULT_NUMBER_OF_ITEMS);
+        assertThat(testDashboard.getCurrency()).isEqualTo(DEFAULT_CURRENCY);
 
         // Validate the Dashboard in Elasticsearch
         Dashboard dashboardEs = dashboardSearchRepository.findOne(testDashboard.getId());
@@ -201,7 +206,8 @@ public class DashboardResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(dashboard.getId().intValue())))
             .andExpect(jsonPath("$.[*].transferDate").value(hasItem(DEFAULT_TRANSFER_DATE.toString())))
             .andExpect(jsonPath("$.[*].profitAndLoss").value(hasItem(DEFAULT_PROFIT_AND_LOSS.doubleValue())))
-            .andExpect(jsonPath("$.[*].numberOfItems").value(hasItem(DEFAULT_NUMBER_OF_ITEMS.intValue())));
+            .andExpect(jsonPath("$.[*].numberOfItems").value(hasItem(DEFAULT_NUMBER_OF_ITEMS.intValue())))
+            .andExpect(jsonPath("$.[*].currency").value(hasItem(DEFAULT_CURRENCY.doubleValue())));
     }
 
     @Test
@@ -217,7 +223,8 @@ public class DashboardResourceIntTest {
             .andExpect(jsonPath("$.id").value(dashboard.getId().intValue()))
             .andExpect(jsonPath("$.transferDate").value(DEFAULT_TRANSFER_DATE.toString()))
             .andExpect(jsonPath("$.profitAndLoss").value(DEFAULT_PROFIT_AND_LOSS.doubleValue()))
-            .andExpect(jsonPath("$.numberOfItems").value(DEFAULT_NUMBER_OF_ITEMS.intValue()));
+            .andExpect(jsonPath("$.numberOfItems").value(DEFAULT_NUMBER_OF_ITEMS.intValue()))
+            .andExpect(jsonPath("$.currency").value(DEFAULT_CURRENCY.doubleValue()));
     }
 
     @Test
@@ -241,7 +248,8 @@ public class DashboardResourceIntTest {
         updatedDashboard
             .transferDate(UPDATED_TRANSFER_DATE)
             .profitAndLoss(UPDATED_PROFIT_AND_LOSS)
-            .numberOfItems(UPDATED_NUMBER_OF_ITEMS);
+            .numberOfItems(UPDATED_NUMBER_OF_ITEMS)
+            .currency(UPDATED_CURRENCY);
         DashboardDTO dashboardDTO = dashboardMapper.toDto(updatedDashboard);
 
         restDashboardMockMvc.perform(put("/api/dashboards")
@@ -256,6 +264,7 @@ public class DashboardResourceIntTest {
         assertThat(testDashboard.getTransferDate()).isEqualTo(UPDATED_TRANSFER_DATE);
         assertThat(testDashboard.getProfitAndLoss()).isEqualTo(UPDATED_PROFIT_AND_LOSS);
         assertThat(testDashboard.getNumberOfItems()).isEqualTo(UPDATED_NUMBER_OF_ITEMS);
+        assertThat(testDashboard.getCurrency()).isEqualTo(UPDATED_CURRENCY);
 
         // Validate the Dashboard in Elasticsearch
         Dashboard dashboardEs = dashboardSearchRepository.findOne(testDashboard.getId());
@@ -317,7 +326,8 @@ public class DashboardResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(dashboard.getId().intValue())))
             .andExpect(jsonPath("$.[*].transferDate").value(hasItem(DEFAULT_TRANSFER_DATE.toString())))
             .andExpect(jsonPath("$.[*].profitAndLoss").value(hasItem(DEFAULT_PROFIT_AND_LOSS.doubleValue())))
-            .andExpect(jsonPath("$.[*].numberOfItems").value(hasItem(DEFAULT_NUMBER_OF_ITEMS.intValue())));
+            .andExpect(jsonPath("$.[*].numberOfItems").value(hasItem(DEFAULT_NUMBER_OF_ITEMS.intValue())))
+            .andExpect(jsonPath("$.[*].currency").value(hasItem(DEFAULT_CURRENCY.doubleValue())));
     }
 
     @Test

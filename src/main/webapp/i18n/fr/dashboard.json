@@ -19,8 +19,9 @@
             "transferDate": "Date (Jour/Mois)",
             "profitAndLoss": "Perte/Profit",
             "numberOfItems": "Nombre D'éléments",
+            "currency": "Monnaie",
             "warehouseOutg": "Tiers Sortie",
             "materialTypeDefDashboard": "Type de Matériel"
-        }
+                 }
     }
 }

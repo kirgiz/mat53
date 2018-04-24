@@ -6,6 +6,7 @@ export class DashboardStockAndSalesUtility implements BaseEntity {
         public transferDate?: any,
         public profitAndLoss?: number,
         public numberOfItems?: number,
+        public currency?: number,
         public warehouseOutgId?: number,
         public materialTypeDefDashboardId?: number,
     ) {

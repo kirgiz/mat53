@@ -22,6 +22,8 @@ public class DashboardDTO implements Serializable {
 
     private Long numberOfItems;
 
+    private Double currency;
+
     private Long warehouseOutgId;
 
     private String warehouseOutgName;
@@ -60,6 +62,14 @@ public class DashboardDTO implements Serializable {
 
     public void setNumberOfItems(Long numberOfItems) {
         this.numberOfItems = numberOfItems;
+    }
+
+    public Double getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Double currency) {
+        this.currency = currency;
     }
 
     public Long getWarehouseOutgId() {
@@ -122,6 +132,7 @@ public class DashboardDTO implements Serializable {
             ", transferDate='" + getTransferDate() + "'" +
             ", profitAndLoss='" + getProfitAndLoss() + "'" +
             ", numberOfItems='" + getNumberOfItems() + "'" +
+            ", currency='" + getCurrency() + "'" +
             "}";
     }
 }

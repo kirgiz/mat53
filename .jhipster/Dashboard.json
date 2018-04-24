@@ -31,14 +31,17 @@
         {
             "fieldName": "numberOfItems",
             "fieldType": "Long"
+        },
+        {
+            "fieldName": "currency",
+            "fieldType": "Double"
         }
     ],
     "changelogDate": "20180409195551",
-    "entityTableName": "dashboard",
     "dto": "mapstruct",
-    "pagination": "no",
     "service": "serviceClass",
+    "entityTableName": "dashboard",
     "jpaMetamodelFiltering": false,
-    "searchEngine": "elasticsearch",
+    "pagination": "no",
     "angularJSSuffix": "StockAndSalesUtility"
 }

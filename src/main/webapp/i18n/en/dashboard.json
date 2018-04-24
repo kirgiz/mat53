@@ -19,6 +19,7 @@
             "transferDate": "Transfer Date",
             "profitAndLoss": "Profit And Loss",
             "numberOfItems": "Number Of Items",
+            "currency": "Currency",
             "warehouseOutg": "Warehouse Outg",
             "materialTypeDefDashboard": "Material Type Def Dashboard"
         }

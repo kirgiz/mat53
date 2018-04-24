@@ -36,6 +36,9 @@ public class Dashboard implements Serializable {
     @Column(name = "number_of_items")
     private Long numberOfItems;
 
+    @Column(name = "currency")
+    private Double currency;
+
     @ManyToOne(optional = false)
     @NotNull
     private Third warehouseOutg;
@@ -92,6 +95,19 @@ public class Dashboard implements Serializable {
         this.numberOfItems = numberOfItems;
     }
 
+    public Double getCurrency() {
+        return currency;
+    }
+
+    public Dashboard currency(Double currency) {
+        this.currency = currency;
+        return this;
+    }
+
+    public void setCurrency(Double currency) {
+        this.currency = currency;
+    }
+
     public Third getWarehouseOutg() {
         return warehouseOutg;
     }
@@ -146,6 +162,7 @@ public class Dashboard implements Serializable {
             ", transferDate='" + getTransferDate() + "'" +
             ", profitAndLoss='" + getProfitAndLoss() + "'" +
             ", numberOfItems='" + getNumberOfItems() + "'" +
+            ", currency='" + getCurrency() + "'" +
             "}";
     }
 }

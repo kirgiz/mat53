@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http'
+import { Http, Response } from '@angular/http';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-
 import { Observable } from 'rxjs/Rx';
 import { SERVER_API_URL } from '../../app.constants';
 
@@ -29,23 +28,22 @@ export class DashboardStockAndSalesUtilityService {
     private thirdService: ThirdStockAndSalesUtilityService,
 private materialService: MaterialStockAndSalesUtilityService) { }
 
-    create(dashboard: DashboardStockAndSalesUtility, convertDate: boolean): Observable<DashboardStockAndSalesUtility> {
-        const copy = this.convert(dashboard ,convertDate);
-        console.log('dfsfsdfsdfsdfsdfsdfsfdsdfsdfsdfsdjjjjjjjjjjjjjjjjjjjjjjjj');
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
+create(dashboard: DashboardStockAndSalesUtility, convertDate: boolean): Observable<DashboardStockAndSalesUtility> {
+    const copy = this.convert(dashboard ,convertDate);
+    console.log('dfsfsdfsdfsdfsdfsdfsfdsdfsdfsdfsdjjjjjjjjjjjjjjjjjjjjjjjj');
+    return this.http.post(this.resourceUrl, copy).map((res: Response) => {
+        const jsonResponse = res.json();
+        return this.convertItemFromServer(jsonResponse);
+    });
+}
 
-
-    update(dashboard: DashboardStockAndSalesUtility): Observable<DashboardStockAndSalesUtility> {
-        const copy = this.convert(dashboard,true);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
-    }
+update(dashboard: DashboardStockAndSalesUtility): Observable<DashboardStockAndSalesUtility> {
+    const copy = this.convert(dashboard,true);
+    return this.http.put(this.resourceUrl, copy).map((res: Response) => {
+        const jsonResponse = res.json();
+        return this.convertItemFromServer(jsonResponse);
+    });
+}
 
     find(id: number): Observable<DashboardStockAndSalesUtility> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
@@ -67,7 +65,6 @@ private materialService: MaterialStockAndSalesUtilityService) { }
 queryMaterial(id: number): Observable<MaterialStockAndSalesUtility> {
     return this.materialService.find(id);
 }
-
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
@@ -109,6 +106,6 @@ queryMaterial(id: number): Observable<MaterialStockAndSalesUtility> {
         else {
             copy.transferDate=dashboard.transferDate
         }
-        return copy;
+                return copy;
     }
 }

@@ -14,7 +14,6 @@ import {
     dashboardRoute,
     dashboardPopupRoute,
 } from './';
-
 import {MaterialhistoryStockAndSalesUtilityService} from '../materialhistory';
 import {ThirdStockAndSalesUtilityService} from '../third';
 import {ForexratesStockAndSalesUtilityService} from '../forexrates';
@@ -53,8 +52,8 @@ const ENTITY_STATES = [
         ThirdStockAndSalesUtilityService,
         ForexratesStockAndSalesUtilityService,
         LotStockAndSalesUtilityService,
-        MaterialStockAndSalesUtilityService
-    ],
+        MaterialStockAndSalesUtilityService,
+        ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Matv53DashboardStockAndSalesUtilityModule {}
