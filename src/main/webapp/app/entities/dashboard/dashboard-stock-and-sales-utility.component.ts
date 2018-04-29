@@ -88,20 +88,12 @@ export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy
                                 this.getForexRate(materialTransfer.outgccyId , materialTransfer.creationDate),
                                  1, materialTransfer.outgccyId, materialTransfer.warehousefromId
                                 , resmat.materialClassifId);
-                              //  console.log('gggggggg');
                                 currentSummary.warehouseOutgId = materialTransfer.warehousefromId
-                            //    console.log(materialTransfer.warehousefromId);
                                 dashboardMap.set(key, currentSummary);
                         }
                         for (const dashboardItem of Array.from(dashboardMap.values())) {
                             dashboardItem.profitAndLoss = dashboardItem.profitAndLoss / dashboardItem.numberOfItems;
                           dashboardItem.id = null;
-                         // dashboardItem.materialTypeDefDashboardId = resmat.materialClassifId;
-                          //resmat.materialClassifId
-                        //  console.log('HHHHHHHHHHHHH');
-                          console.log(dashboardItem.materialTypeDefDashboardId);
-                        //  console.log('dfhdhghgh');
-                          console.log(materialTransfer.warehousefromId);
                           console.log(dashboardItem.warehouseOutgId);
                                 this.dashboardService.create(dashboardItem, false).subscribe(
                                     (res1: DashboardStockAndSalesUtility) => {
