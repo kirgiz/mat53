@@ -29,6 +29,12 @@
             "relationshipName": "warehouseto",
             "otherEntityName": "third",
             "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "outgccy",
+            "otherEntityName": "currency",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "isoCode"
         }
     ],
     "fields": [
@@ -58,14 +64,17 @@
                 "maxlength"
             ],
             "fieldValidateRulesMaxlength": 500
+        },
+        {
+            "fieldName": "outgoingCurrency",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20180409195550",
-    "entityTableName": "materialhistory",
     "dto": "mapstruct",
-    "pagination": "pagination",
     "service": "serviceClass",
+    "entityTableName": "materialhistory",
     "jpaMetamodelFiltering": false,
-    "searchEngine": "elasticsearch",
+    "pagination": "pagination",
     "angularJSSuffix": "StockAndSalesUtility"
 }

@@ -55,6 +55,11 @@
                 </small>
             </div>
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.materialhistory.outgoingCurrency" for="field_outgoingCurrency">Outgoing Currency</label>
+            <input type="text" class="form-control" name="outgoingCurrency" id="field_outgoingCurrency"
+                [(ngModel)]="materialhistory.outgoingCurrency"  />
+        </div>
 
         <div class="form-group">
             <label jhiTranslate="matv53App.materialhistory.itemTransfered" for="field_itemTransfered">Item Transfered</label>
@@ -100,6 +105,13 @@
                 [hidden]="!editForm.controls.warehouseto?.errors?.required" jhiTranslate="entity.validation.required">
                 This field is required.
             </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="matv53App.materialhistory.outgccy" for="field_outgccy">Outgccy</label>
+            <select class="form-control" id="field_outgccy" name="outgccy" [(ngModel)]="materialhistory.outgccyId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="currencyOption.id" *ngFor="let currencyOption of currencies; trackBy: trackCurrencyById">{{currencyOption.isoCode}}</option>
+            </select>
         </div>
     </div>
     <div class="modal-footer">

@@ -26,6 +26,8 @@ public class MaterialhistoryDTO implements Serializable {
     @Size(max = 500)
     private String comments;
 
+    private String outgoingCurrency;
+
     private Set<MaterialDTO> itemTransfereds = new HashSet<>();
 
     private Long transferClassifId;
@@ -39,6 +41,10 @@ public class MaterialhistoryDTO implements Serializable {
     private Long warehousetoId;
 
     private String warehousetoName;
+
+    private Long outgccyId;
+
+    private String outgccyIsoCode;
 
     public Long getId() {
         return id;
@@ -78,6 +84,14 @@ public class MaterialhistoryDTO implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getOutgoingCurrency() {
+        return outgoingCurrency;
+    }
+
+    public void setOutgoingCurrency(String outgoingCurrency) {
+        this.outgoingCurrency = outgoingCurrency;
     }
 
     public Set<MaterialDTO> getItemTransfereds() {
@@ -136,6 +150,22 @@ public class MaterialhistoryDTO implements Serializable {
         this.warehousetoName = thirdName;
     }
 
+    public Long getOutgccyId() {
+        return outgccyId;
+    }
+
+    public void setOutgccyId(Long currencyId) {
+        this.outgccyId = currencyId;
+    }
+
+    public String getOutgccyIsoCode() {
+        return outgccyIsoCode;
+    }
+
+    public void setOutgccyIsoCode(String currencyIsoCode) {
+        this.outgccyIsoCode = currencyIsoCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -165,6 +195,7 @@ public class MaterialhistoryDTO implements Serializable {
             ", creationDate='" + getCreationDate() + "'" +
             ", price='" + getPrice() + "'" +
             ", comments='" + getComments() + "'" +
+            ", outgoingCurrency='" + getOutgoingCurrency() + "'" +
             "}";
     }
 }

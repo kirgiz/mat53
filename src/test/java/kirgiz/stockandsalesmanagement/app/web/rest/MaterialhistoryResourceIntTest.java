@@ -59,6 +59,9 @@ public class MaterialhistoryResourceIntTest {
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
 
+    private static final String DEFAULT_OUTGOING_CURRENCY = "AAAAAAAAAA";
+    private static final String UPDATED_OUTGOING_CURRENCY = "BBBBBBBBBB";
+
     @Autowired
     private MaterialhistoryRepository materialhistoryRepository;
 
@@ -109,7 +112,8 @@ public class MaterialhistoryResourceIntTest {
             .code(DEFAULT_CODE)
             .creationDate(DEFAULT_CREATION_DATE)
             .price(DEFAULT_PRICE)
-            .comments(DEFAULT_COMMENTS);
+            .comments(DEFAULT_COMMENTS)
+            .outgoingCurrency(DEFAULT_OUTGOING_CURRENCY);
         // Add required entity
         Transferclassification transferClassif = TransferclassificationResourceIntTest.createEntity(em);
         em.persist(transferClassif);
@@ -154,6 +158,7 @@ public class MaterialhistoryResourceIntTest {
         assertThat(testMaterialhistory.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
         assertThat(testMaterialhistory.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testMaterialhistory.getComments()).isEqualTo(DEFAULT_COMMENTS);
+        assertThat(testMaterialhistory.getOutgoingCurrency()).isEqualTo(DEFAULT_OUTGOING_CURRENCY);
 
         // Validate the Materialhistory in Elasticsearch
         Materialhistory materialhistoryEs = materialhistorySearchRepository.findOne(testMaterialhistory.getId());
@@ -213,7 +218,8 @@ public class MaterialhistoryResourceIntTest {
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(DEFAULT_CREATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
+            .andExpect(jsonPath("$.[*].outgoingCurrency").value(hasItem(DEFAULT_OUTGOING_CURRENCY.toString())));
     }
 
     @Test
@@ -230,7 +236,8 @@ public class MaterialhistoryResourceIntTest {
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.creationDate").value(DEFAULT_CREATION_DATE.toString()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
+            .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()))
+            .andExpect(jsonPath("$.outgoingCurrency").value(DEFAULT_OUTGOING_CURRENCY.toString()));
     }
 
     @Test
@@ -255,7 +262,8 @@ public class MaterialhistoryResourceIntTest {
             .code(UPDATED_CODE)
             .creationDate(UPDATED_CREATION_DATE)
             .price(UPDATED_PRICE)
-            .comments(UPDATED_COMMENTS);
+            .comments(UPDATED_COMMENTS)
+            .outgoingCurrency(UPDATED_OUTGOING_CURRENCY);
         MaterialhistoryDTO materialhistoryDTO = materialhistoryMapper.toDto(updatedMaterialhistory);
 
         restMaterialhistoryMockMvc.perform(put("/api/materialhistories")
@@ -271,6 +279,7 @@ public class MaterialhistoryResourceIntTest {
         assertThat(testMaterialhistory.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
         assertThat(testMaterialhistory.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testMaterialhistory.getComments()).isEqualTo(UPDATED_COMMENTS);
+        assertThat(testMaterialhistory.getOutgoingCurrency()).isEqualTo(UPDATED_OUTGOING_CURRENCY);
 
         // Validate the Materialhistory in Elasticsearch
         Materialhistory materialhistoryEs = materialhistorySearchRepository.findOne(testMaterialhistory.getId());
@@ -333,7 +342,8 @@ public class MaterialhistoryResourceIntTest {
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(DEFAULT_CREATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
+            .andExpect(jsonPath("$.[*].outgoingCurrency").value(hasItem(DEFAULT_OUTGOING_CURRENCY.toString())));
     }
 
     @Test

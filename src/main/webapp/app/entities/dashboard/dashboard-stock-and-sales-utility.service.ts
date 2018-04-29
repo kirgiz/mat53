@@ -14,6 +14,7 @@ import {ThirdStockAndSalesUtilityService, ThirdStockAndSalesUtility} from '../th
 import {ForexratesStockAndSalesUtilityService, ForexratesStockAndSalesUtility} from '../forexrates';
 import {LotStockAndSalesUtilityService, LotStockAndSalesUtility} from '../lot';
 import {MaterialStockAndSalesUtilityService, MaterialStockAndSalesUtility} from '../material';
+//import {MaterialclassificationStockAndSalesUtility, MaterialclassificationStockAndSalesUtilityService} from '../materialclassification'
 
 @Injectable()
 export class DashboardStockAndSalesUtilityService {
@@ -65,6 +66,11 @@ update(dashboard: DashboardStockAndSalesUtility): Observable<DashboardStockAndSa
 queryMaterial(id: number): Observable<MaterialStockAndSalesUtility> {
     return this.materialService.find(id);
 }
+
+queryFxRate(req?: any): Observable<ResponseWrapper> {
+    return this.fxRatesService.query();
+}
+
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
@@ -99,13 +105,10 @@ queryMaterial(id: number): Observable<MaterialStockAndSalesUtility> {
      */
     private convert(dashboard: DashboardStockAndSalesUtility,convertDate: boolean): DashboardStockAndSalesUtility {
         const copy: DashboardStockAndSalesUtility = Object.assign({}, dashboard);
-        if (convertDate) {
-        copy.transferDate = this.dateUtils
+        if (convertDate) { copy.transferDate = this.dateUtils
             .convertLocalDateToServer(dashboard.transferDate);
         }
-        else {
-            copy.transferDate=dashboard.transferDate
-        }
+        else {copy.transferDate = dashboard.transferDate;}
                 return copy;
     }
 }

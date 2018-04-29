@@ -43,6 +43,9 @@ public class Materialhistory implements Serializable {
     @Column(name = "comments", length = 500)
     private String comments;
 
+    @Column(name = "outgoing_currency")
+    private String outgoingCurrency;
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "materialhistory_item_transfered",
@@ -61,6 +64,9 @@ public class Materialhistory implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private Third warehouseto;
+
+    @ManyToOne
+    private Currency outgccy;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -121,6 +127,19 @@ public class Materialhistory implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getOutgoingCurrency() {
+        return outgoingCurrency;
+    }
+
+    public Materialhistory outgoingCurrency(String outgoingCurrency) {
+        this.outgoingCurrency = outgoingCurrency;
+        return this;
+    }
+
+    public void setOutgoingCurrency(String outgoingCurrency) {
+        this.outgoingCurrency = outgoingCurrency;
     }
 
     public Set<Material> getItemTransfereds() {
@@ -184,6 +203,19 @@ public class Materialhistory implements Serializable {
     public void setWarehouseto(Third third) {
         this.warehouseto = third;
     }
+
+    public Currency getOutgccy() {
+        return outgccy;
+    }
+
+    public Materialhistory outgccy(Currency currency) {
+        this.outgccy = currency;
+        return this;
+    }
+
+    public void setOutgccy(Currency currency) {
+        this.outgccy = currency;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -214,6 +246,7 @@ public class Materialhistory implements Serializable {
             ", creationDate='" + getCreationDate() + "'" +
             ", price='" + getPrice() + "'" +
             ", comments='" + getComments() + "'" +
+            ", outgoingCurrency='" + getOutgoingCurrency() + "'" +
             "}";
     }
 }

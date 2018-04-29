@@ -37,5 +37,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="third"/>
 
+        <addForeignKeyConstraint baseColumnNames="outgccy_id"
+                                 baseTableName="materialhistory"
+                                 constraintName="fk_materialhistory_outgccy_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="currency"/>
+
     </changeSet>
 </databaseChangeLog>

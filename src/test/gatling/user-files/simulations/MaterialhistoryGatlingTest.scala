@@ -68,7 +68,7 @@ class MaterialhistoryGatlingTest extends Simulation {
             .exec(http("Create new materialhistory")
             .post("/api/materialhistories")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "code":"SAMPLE_TEXT", "creationDate":"2020-01-01T00:00:00.000Z", "price":null, "comments":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "code":"SAMPLE_TEXT", "creationDate":"2020-01-01T00:00:00.000Z", "price":null, "comments":"SAMPLE_TEXT", "outgoingCurrency":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_materialhistory_url"))).exitHereIfFailed
             .pause(10)

@@ -37,6 +37,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="outgoing_currency" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="transfer_classif_id" type="bigint">
                 <constraints nullable="false" />
             </column>
@@ -47,6 +51,10 @@
 
             <column name="warehouseto_id" type="bigint">
                 <constraints nullable="false" />
+            </column>
+
+            <column name="outgccy_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

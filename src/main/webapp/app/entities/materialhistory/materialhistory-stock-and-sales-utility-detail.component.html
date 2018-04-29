@@ -20,6 +20,10 @@
         <dd>
             <span>{{materialhistory.comments}}</span>
         </dd>
+        <dt><span jhiTranslate="matv53App.materialhistory.outgoingCurrency">Outgoing Currency</span></dt>
+        <dd>
+            <span>{{materialhistory.outgoingCurrency}}</span>
+        </dd>
         <dt><span jhiTranslate="matv53App.materialhistory.itemTransfered">Item Transfered</span></dt>
         <dd>
             <span *ngFor="let itemTransfered of materialhistory.itemTransfereds; let last = last">
@@ -42,6 +46,12 @@
         <dd>
             <div *ngIf="materialhistory.warehousetoId">
                 <a [routerLink]="['/third-stock-and-sales-utility', materialhistory.warehousetoId]">{{materialhistory.warehousetoName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="matv53App.materialhistory.outgccy">Outgccy</span></dt>
+        <dd>
+            <div *ngIf="materialhistory.outgccyId">
+                <a [routerLink]="['/currency-stock-and-sales-utility', materialhistory.outgccyId]">{{materialhistory.outgccyIsoCode}}</a>
             </div>
         </dd>
     </dl>

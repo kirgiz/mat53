@@ -34,9 +34,11 @@
             <th jhiSortBy="creationDate"><span jhiTranslate="matv53App.materialhistory.creationDate">Creation Date</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="price"><span jhiTranslate="matv53App.materialhistory.price">Price</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="comments"><span jhiTranslate="matv53App.materialhistory.comments">Comments</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="outgoingCurrency"><span jhiTranslate="matv53App.materialhistory.outgoingCurrency">Outgoing Currency</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="transferClassifName"><span jhiTranslate="matv53App.materialhistory.transferClassif">Transfer Classif</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="warehousefromName"><span jhiTranslate="matv53App.materialhistory.warehousefrom">Warehousefrom</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="warehousetoName"><span jhiTranslate="matv53App.materialhistory.warehouseto">Warehouseto</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="outgccyIsoCode"><span jhiTranslate="matv53App.materialhistory.outgccy">Outgccy</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -47,6 +49,7 @@
                 <td>{{materialhistory.creationDate | date:'mediumDate'}}</td>
                 <td>{{materialhistory.price}}</td>
                 <td>{{materialhistory.comments}}</td>
+                <td>{{materialhistory.outgoingCurrency}}</td>
                 <td>
                     <div *ngIf="materialhistory.transferClassifId">
                         <a [routerLink]="['../transferclassification-stock-and-sales-utility', materialhistory.transferClassifId  ]" >{{materialhistory.transferClassifName}}</a>
@@ -60,6 +63,11 @@
                 <td>
                     <div *ngIf="materialhistory.warehousetoId">
                         <a [routerLink]="['../third-stock-and-sales-utility', materialhistory.warehousetoId  ]" >{{materialhistory.warehousetoName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="materialhistory.outgccyId">
+                        <a [routerLink]="['../currency-stock-and-sales-utility', materialhistory.outgccyId  ]" >{{materialhistory.outgccyIsoCode}}</a>
                     </div>
                 </td>
                 <td class="text-right">

@@ -12,6 +12,7 @@ import { MaterialhistoryStockAndSalesUtilityService } from './materialhistory-st
 import { MaterialStockAndSalesUtility, MaterialStockAndSalesUtilityService } from '../material';
 import { TransferclassificationStockAndSalesUtility, TransferclassificationStockAndSalesUtilityService } from '../transferclassification';
 import { ThirdStockAndSalesUtility, ThirdStockAndSalesUtilityService } from '../third';
+import { CurrencyStockAndSalesUtility, CurrencyStockAndSalesUtilityService } from '../currency';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -28,6 +29,8 @@ export class MaterialhistoryStockAndSalesUtilityDialogComponent implements OnIni
     transferclassifications: TransferclassificationStockAndSalesUtility[];
 
     thirds: ThirdStockAndSalesUtility[];
+
+    currencies: CurrencyStockAndSalesUtility[];
     creationDateDp: any;
 
     constructor(
@@ -37,6 +40,7 @@ export class MaterialhistoryStockAndSalesUtilityDialogComponent implements OnIni
         private materialService: MaterialStockAndSalesUtilityService,
         private transferclassificationService: TransferclassificationStockAndSalesUtilityService,
         private thirdService: ThirdStockAndSalesUtilityService,
+        private currencyService: CurrencyStockAndSalesUtilityService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -49,6 +53,8 @@ export class MaterialhistoryStockAndSalesUtilityDialogComponent implements OnIni
             .subscribe((res: ResponseWrapper) => { this.transferclassifications = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.thirdService.query()
             .subscribe((res: ResponseWrapper) => { this.thirds = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.currencyService.query()
+            .subscribe((res: ResponseWrapper) => { this.currencies = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -56,8 +62,6 @@ export class MaterialhistoryStockAndSalesUtilityDialogComponent implements OnIni
     }
 
     save() {
-      console.log('dsfsdfdsfdsfsdfsf');
-      console.log(this.materialhistory.creationDate);
         this.isSaving = true;
         if (this.materialhistory.id !== undefined) {
             this.subscribeToSaveResponse(
@@ -96,6 +100,10 @@ export class MaterialhistoryStockAndSalesUtilityDialogComponent implements OnIni
     }
 
     trackThirdById(index: number, item: ThirdStockAndSalesUtility) {
+        return item.id;
+    }
+
+    trackCurrencyById(index: number, item: CurrencyStockAndSalesUtility) {
         return item.id;
     }
 

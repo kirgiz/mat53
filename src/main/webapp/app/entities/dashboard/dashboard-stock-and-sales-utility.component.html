@@ -23,10 +23,22 @@
                   </div>
               </form>
           </div>
-      </div> -->
+      </div> 
+      <div class="row">     <div class="col-md-11">    
+        <span *ngIf="bpReadings.readings && bpReadings.readings.length">      
+                   <nvd3 [options]="bpOptions" [data]="bpData"               
+                       class="with-3d-shadow with-transitions"></nvd3>       
+                      </span>         <ngb-alert [dismissible]="false"           
+                        [hidden]="bpReadings.readings && bpReadings.readings.length">        
+                             <span jhiTranslate="home.bloodPressure.noReadings">             
+                                     No blood pressure readings found.           
+                                      </span>         </ngb-alert> 
+                                        </div> 
+                                </div>-->
+      
     <br/>
     <div class="table-responsive" *ngIf="dashboards">
-        <table class="table table-striped">
+        <table class="table table-striped" width="400px">
             <thead>
             <tr>
              <!--     <th><span jhiTranslate="global.field.id">ID</span></th> -->
