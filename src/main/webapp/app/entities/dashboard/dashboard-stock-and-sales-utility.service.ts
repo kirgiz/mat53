@@ -63,8 +63,8 @@ update(dashboard: DashboardStockAndSalesUtility): Observable<DashboardStockAndSa
         return this.matHistoryService.query();
 }
 
-queryMaterial(id: number): Observable<MaterialStockAndSalesUtility> {
-    return this.materialService.find(id);
+queryMaterial(req?: any): Observable<ResponseWrapper> {
+    return this.materialService.query();
 }
 
 queryFxRate(req?: any): Observable<ResponseWrapper> {

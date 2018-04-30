@@ -11,6 +11,7 @@ import {ThirdStockAndSalesUtility} from '../third';
 import {MaterialStockAndSalesUtility} from '../material';
 import {ForexratesStockAndSalesUtility} from '../forexrates';
 import {LotStockAndSalesUtility} from '../lot';
+import { D3ChartService } from './D3ChartService';
 
 @Component({
     selector: 'jhi-dashboard-stock-and-sales-utility',
@@ -23,10 +24,14 @@ export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy
     forexRates: ForexratesStockAndSalesUtility[];
     dashboards: DashboardStockAndSalesUtility[];
     lots: LotStockAndSalesUtility[];
-    material: MaterialStockAndSalesUtility;
+    material: MaterialStockAndSalesUtility[];
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
+    bpReadings: any = {};
+    bpOptions: any= {};
+bpData: any= {};
+ dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String , DashboardStockAndSalesUtility>();
 
     constructor(
         private dashboardService: DashboardStockAndSalesUtilityService,
@@ -52,65 +57,148 @@ export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy
             }
         );
 
-        this.material = new MaterialhistoryStockAndSalesUtility;
+        this.material = new  Array<MaterialStockAndSalesUtility>();
+        this.dashboardService.queryMaterial().take(1).subscribe(
+            (resmat: ResponseWrapper) => {
+                this.material = resmat.json;
+          //   console.log('AAAAAAAAAAA');
+           // console.log(this.material.);
+        },()=>console.log('err'), ()=> {console.log('completed')});
 
-        this.dashboardService.queryMaterialHistory().subscribe(
-            (res: ResponseWrapper) => {
-                this.transfers = res.json;
-    this.summary = new Map();
-    const dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String , DashboardStockAndSalesUtility>();
-                this.dashboards = new Array<DashboardStockAndSalesUtility>();
-                for (const materialTransfer of this.transfers) {
-                                   const transferDate: Date = new Date(materialTransfer.creationDate);
-                                   const transferDateYYYYMM = parseInt((String)(transferDate.getFullYear().toString()).concat((String)(transferDate.getMonth().toString())), 10);
-                                  // console.log((String)(transferDate.getFullYear().toString()));
-                                  const  key = (String)(transferDateYYYYMM.toString()).concat((String)(materialTransfer.warehousefromId.toString()));
-                                     key.concat(materialTransfer.transferClassifId.toString());
-                                     key.concat(materialTransfer.toString())
-                                 for (const material of materialTransfer.itemTransfereds){
-                                   // console.log(material.id);
-                                    this.dashboardService.queryMaterial(material.id).takeLast(1).subscribe(
-                                        (resmat: MaterialStockAndSalesUtility) => {
-                                            this.material = resmat;
-                                        //    console.log('AAAAAAAAAAA');
-                                      //  console.log(resmat.materialClassifId);
-                                        if (dashboardMap.has(key)) {
-                                            const transferSummary: DashboardStockAndSalesUtility = dashboardMap.get(key);
+        this.dashboardService.query().subscribe((res:ResponseWrapper) => {
+            this.dashboards=res.json;
+            for (const dashboardItem of  this.dashboards){
+                this.dashboardService.delete(dashboardItem.id);
+            }
+        },()=>console.log('Error'),()=>this.dashboards=new Array<DashboardStockAndSalesUtility>());
+        this.dashboardService.queryMaterialHistory().subscribe((res:ResponseWrapper)=> 
+        {this.transfers = res.json;},
+        ()=>console.log('gfdgdfg'),
+        () => {console.log('length');console.log(this.transfers.length);
+        this.summary = new Map();
+        
+                    this.dashboards = new Array<DashboardStockAndSalesUtility>();
+                    for (const materialTransfer of this.transfers) {
+                                       const transferDate: Date = new Date(materialTransfer.creationDate);
+                                       const transferDateYYYYMM = parseInt((String)(transferDate.getFullYear().toString()).concat((String)(transferDate.getMonth().toString())), 10);
+                                      // console.log((String)(transferDate.getFullYear().toString()));
+                                      const  key = (String)(transferDateYYYYMM.toString()).concat((String)(materialTransfer.warehousefromId.toString()));
+                                         key.concat(materialTransfer.transferClassifId.toString());
+                                         key.concat(materialTransfer.toString());
+                                  
+                                       // console.log(material.id);
+                                       
+                                        if (this.dashboardMap.has(key)) {
+                                         //   console.log('jaskey');
+                                        //    console.log(key);
+                                            const transferSummary: DashboardStockAndSalesUtility = this.dashboardMap.get(key);
                                               transferSummary.numberOfItems = transferSummary.numberOfItems + 1;
                                               transferSummary.profitAndLoss = transferSummary.profitAndLoss + materialTransfer.price *
                                               this.getForexRate(materialTransfer.outgccyId , materialTransfer.creationDate);
                                               transferSummary.warehouseOutgId = materialTransfer.warehousefromId;
-                                           dashboardMap.set(key, transferSummary);
+                                              this.dashboardMap.set(key, transferSummary);
                         } else {
+                        //    console.log('nokey');
+                       //     console.log(key);
+                            let matclassif: number;
+                            for (const material of materialTransfer.itemTransfereds){
+                            for (const mat of this.material) {
+                                if (material.id===mat.id)
+                                {matclassif=mat.materialClassifId
+                                break;
+                            }}
+                              }
+                           
                             const currentSummary: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(
                                                                 transferDateYYYYMM, materialTransfer.creationDate,
                                                                  materialTransfer.price   *
                                 this.getForexRate(materialTransfer.outgccyId , materialTransfer.creationDate),
                                  1, materialTransfer.outgccyId, materialTransfer.warehousefromId
-                                , resmat.materialClassifId);
+                                , matclassif);
                                 currentSummary.warehouseOutgId = materialTransfer.warehousefromId
-                                dashboardMap.set(key, currentSummary);
-                        }
-                        for (const dashboardItem of Array.from(dashboardMap.values())) {
-                            dashboardItem.profitAndLoss = dashboardItem.profitAndLoss / dashboardItem.numberOfItems;
-                          dashboardItem.id = null;
-                          console.log(dashboardItem.warehouseOutgId);
-                                this.dashboardService.create(dashboardItem, false).subscribe(
-                                    (res1: DashboardStockAndSalesUtility) => {
-                                    const dash: DashboardStockAndSalesUtility = res1;
-                                     this.dashboards.push(dash);
-                                 },
-                                   (res1: ResponseWrapper) => this.onError(res1.json));
-                          }              },
-                                    () => console.log('error'),
-                                () => {console.log('done');
-                                   }         );
-                                 }
-                }
-                this.currentSearch = '';
+                                this.dashboardMap.set(key, currentSummary);
+                        
+                                        
+                                    }
+                                            
+                    }
+
+                    this.currentSearch = '';
+                    let systolics, diastolics, upperValues, lowerValues;
+                    systolics = [];
+                    diastolics = [];
+                    upperValues = [];
+                    lowerValues = [];
+                    console.log('TTTTTTTTTTTTTTTT');
+                    console.log(this.dashboardMap.size);
+        
+                    for (const dashboardItem of Array.from(this.dashboardMap.values())) {
+                        dashboardItem.profitAndLoss = dashboardItem.profitAndLoss / dashboardItem.numberOfItems;
+                      dashboardItem.id = null;
+                      console.log(dashboardItem.warehouseOutgId);
+                            this.dashboardService.create(dashboardItem, false).subscribe(
+                                (res1: DashboardStockAndSalesUtility) => {
+                                const dash: DashboardStockAndSalesUtility = res1;
+                                 this.dashboards.push(dash);
+                                // this.bloodPressureService.last30Days().subscribe((bpReadings: any) => {
+                                //    this.bpReadings = bpReadings;
+                                    this.bpOptions = {... D3ChartService.getChartConfig() };
+                                    this.bpOptions.title.text = 'Haaaa';
+                                    this.bpOptions.chart.yAxis.axisLabel = 'Ventes';
+                                 //  if (bpReadings.readings.length) {
+                                    
+                                  //  bpReadings.readings.forEach((item) => {
+                                    systolics.push({
+                                    x: dashboardItem.transferDate,
+                                    y: dashboardItem.numberOfItems
+                                    });
+                                    console.log('kkkkkkkkkk');
+                                    console.log(dashboardItem.numberOfItems);
+                                    console.log(dashboardItem.transferDate);
+
+
+
+                                   /* diastolics.push({
+                                    x: dashboardItem.transferDate,
+                                    y: dashboardItem.profitAndLoss
+                                    });*/
+                                    upperValues.push(dashboardItem.numberOfItems);
+                                    lowerValues.push(0);
+                                   // });
+                                    this.bpData = [{
+                                    values: systolics,
+                                    key: 'Ventes',
+                                    color: '#673ab7'
+                                    }, /*{
+                                    values: diastolics,
+                                    key: 'Diastolic',
+                                    color: '#03a9f4'
+                                    }*/];
+                                    // set y scale to be 10 more than max and min
+                                    this.bpOptions.chart.yDomain =
+                                    [Math.min.apply(Math, lowerValues) - 0,
+                                    Math.max.apply(Math, upperValues) + 10];
+                                  //  } else {
+                                   // this.bpReadings.readings = [];
+                                 //   }
+                                   // });
+                             },
+                               (res1: ResponseWrapper) => this.onError(res1.json));
+                      }
+   
+    
+    }
+    );
+
+    /*    this.dashboardService.queryMaterialHistory().subscribe(
+            (res: ResponseWrapper) => {
+               // this.transfers = res.json;
+ 
             },
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
+            (res: ResponseWrapper) => this.onError(res.json),
+           () =>console.log('HHHHHH')
+            
+        );*/
         this.dashboardService.query().subscribe();
     }
 
@@ -166,6 +254,7 @@ forex.rateDate <= date) {
             this.currentAccount = account;
         });
         this.registerChangeInDashboards();
+        {  }
     }
 
     ngOnDestroy() {

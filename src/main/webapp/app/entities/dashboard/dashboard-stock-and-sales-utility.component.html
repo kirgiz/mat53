@@ -25,12 +25,12 @@
           </div>
       </div>-->
       <div class="row">     <div class="col-md-11">    
-        <span *ngIf="bpReadings.readings && bpReadings.readings.length">      
+        <span *ngIf="dashboards && dashboards.length">      
                    <nvd3 [options]="bpOptions" [data]="bpData"               
                        class="with-3d-shadow with-transitions"></nvd3>       
                       </span>         <ngb-alert [dismissible]="false"           
-                        [hidden]="bpReadings.readings && bpReadings.readings.length">        
-                             <span jhiTranslate="home.bloodPressure.noReadings">             
+                        [hidden]="dashboards && dashboards.length">        
+                             <span >             
                                      No blood pressure readings found.           
                                       </span>         </ngb-alert> 
                                         </div> 
@@ -79,7 +79,7 @@
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
-                        <button type="submit"
+                     <!--   <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'dashboard-stock-and-sales-utility/'+ dashboard.id + '/edit'} }]"
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
@@ -92,7 +92,7 @@
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
+                        </button> -->
                     </div>
                 </td>
             </tr>
