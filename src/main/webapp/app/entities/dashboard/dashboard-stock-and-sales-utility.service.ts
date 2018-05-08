@@ -14,7 +14,6 @@ import {ThirdStockAndSalesUtilityService, ThirdStockAndSalesUtility} from '../th
 import {ForexratesStockAndSalesUtilityService, ForexratesStockAndSalesUtility} from '../forexrates';
 import {LotStockAndSalesUtilityService, LotStockAndSalesUtility} from '../lot';
 import {MaterialStockAndSalesUtilityService, MaterialStockAndSalesUtility} from '../material';
-//import {MaterialclassificationStockAndSalesUtility, MaterialclassificationStockAndSalesUtilityService} from '../materialclassification'
 
 @Injectable()
 export class DashboardStockAndSalesUtilityService {
@@ -31,7 +30,6 @@ private materialService: MaterialStockAndSalesUtilityService) { }
 
 create(dashboard: DashboardStockAndSalesUtility, convertDate: boolean): Observable<DashboardStockAndSalesUtility> {
     const copy = this.convert(dashboard ,convertDate);
-    console.log('dfsfsdfsdfsdfsdfsdfsfdsdfsdfsdfsdjjjjjjjjjjjjjjjjjjjjjjjj');
     return this.http.post(this.resourceUrl, copy).map((res: Response) => {
         const jsonResponse = res.json();
         return this.convertItemFromServer(jsonResponse);
@@ -69,6 +67,10 @@ queryMaterial(req?: any): Observable<ResponseWrapper> {
 
 queryFxRate(req?: any): Observable<ResponseWrapper> {
     return this.fxRatesService.query();
+}
+
+queryLot(req?: any): Observable<ResponseWrapper>{
+return this.lotService.query();
 }
 
     delete(id: number): Observable<Response> {
