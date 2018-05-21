@@ -14,6 +14,7 @@ import {ThirdStockAndSalesUtilityService, ThirdStockAndSalesUtility} from '../th
 import {ForexratesStockAndSalesUtilityService, ForexratesStockAndSalesUtility} from '../forexrates';
 import {LotStockAndSalesUtilityService, LotStockAndSalesUtility} from '../lot';
 import {MaterialStockAndSalesUtilityService, MaterialStockAndSalesUtility} from '../material';
+import {CompanyStockAndSalesUtilityService,CompanyStockAndSalesUtility} from '../company';
 
 @Injectable()
 export class DashboardStockAndSalesUtilityService {
@@ -26,7 +27,8 @@ export class DashboardStockAndSalesUtilityService {
         private lotService: LotStockAndSalesUtilityService,
     private fxRatesService: ForexratesStockAndSalesUtilityService,
     private thirdService: ThirdStockAndSalesUtilityService,
-private materialService: MaterialStockAndSalesUtilityService) { }
+private materialService: MaterialStockAndSalesUtilityService,
+private companyService: CompanyStockAndSalesUtilityService) { }
 
 create(dashboard: DashboardStockAndSalesUtility, convertDate: boolean): Observable<DashboardStockAndSalesUtility> {
     const copy = this.convert(dashboard ,convertDate);
@@ -68,6 +70,11 @@ queryMaterial(req?: any): Observable<ResponseWrapper> {
 queryFxRate(req?: any): Observable<ResponseWrapper> {
     return this.fxRatesService.query();
 }
+
+queryCompany(req?: any): Observable<ResponseWrapper> {
+    return this.companyService.query();
+}
+
 
 queryLot(req?: any): Observable<ResponseWrapper>{
 return this.lotService.query();

@@ -1,3 +1,5 @@
+//FORKJOIN
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs/Rx';
@@ -32,6 +34,8 @@ export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy
     currentSearch: string;
     bpReadings: any = {};
     bpOptions: any= {};
+    forkJoinStream: any;
+
 bpData: any= {};
  dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String , DashboardStockAndSalesUtility>();
 
@@ -47,6 +51,11 @@ bpData: any= {};
 
     loadAll() {
        this.forexRates = new Array<ForexratesStockAndSalesUtility>();
+
+       Observable.forkJoin(this.dashboardService.queryFxRate(), this.dashboardService.queryMaterial().take(1),
+       this.dashboardService.queryLot()) .subscribe((res: Array<any>) => {this.forkJoinStream = res;
+    console.log(this.forkJoinStream); }
+);
         this.dashboardService.queryFxRate().subscribe(
             (res: ResponseWrapper) => {
               let  forexRates: ForexratesStockAndSalesUtility[];
@@ -69,9 +78,15 @@ bpData: any= {};
         }, () => console.log('err'), () => {console.log('completed')});
 
         this.lots = new Array<LotStockAndSalesUtility>();
-        this.dashboardService.query().subscribe((reslot: ResponseWrapper) => {
+        this.dashboardService.queryLot().subscribe((reslot: ResponseWrapper) => {
             this.lots = reslot.json;
     }, () => console.log('err'), () => {console.log('completed')});
+    
+    this.dashboardService.queryCompany().subscribe((resCompany: ResponseWrapper) => {
+        this.company = resCompany.json;
+}, () => console.log('err'), () => {console.log('completed')});
+
+
 
         this.dashboardService.query().subscribe((res:ResponseWrapper) => {
             this.dashboards = res.json;
@@ -151,7 +166,7 @@ bpData: any= {};
                                     values: systolics,
                                     key: 'Ventes',
                                     color: '#673ab7'
-                                    },
+                                    },];
                                     this.bpOptions.chart.yDomain =
                                     [Math.min.apply(Math, lowerValues) - 0,
                                     Math.max.apply(Math, upperValues) + 10];
@@ -177,16 +192,18 @@ forex.rateDate <= date) {
     }
 
 
-    private getMaterialPNLInBaseCurrency(lot: number, dateTransfer: Date, price ): number {
+    private getMaterialPNLInBaseCurrency(lotid: number, dateTransfer: Date, price: number, currencyId: number ): number {
         let pnl: number;
         let rateDate: Date;
         for (const lot of this.lots) {
-            if (lot.id === lot)
+            if (lot.id === lotid)
             {
-                if (lot.buycurrencylotId === lot.)
-                {
-
-                }   
+                if (lot.buycurrencylotId === this.company[1].baseCurrencyId) {
+pnl = price - lot.unitBuyPrice;
+                }
+                else {
+                    pnl = price * this.getForexRate(currencyId, dateTransfer ) - lot.unitBuyPrice;
+                }
             }
         }
         return pnl;
