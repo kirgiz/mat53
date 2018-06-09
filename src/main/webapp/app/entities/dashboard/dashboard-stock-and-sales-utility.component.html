@@ -1,3 +1,4 @@
+
 <div>
     <h2>
       <span jhiTranslate="matv53App.dashboard.home.title">Dashboards</span>
@@ -8,8 +9,8 @@
             </span>
         </button> -->
     </h2> 
-    <!--  <jhi-alert></jhi-alert>
-      <div class="row">
+   <jhi-alert></jhi-alert>
+     <!--   <div class="row">
           <div class="col-sm-12">
               <form name="searchForm" class="form-inline">
                   <div class="input-group w-100 mt-3">
@@ -23,7 +24,7 @@
                   </div>
               </form>
           </div>
-      </div>-->
+      </div> -->
       <div class="row">     <div class="col-md-11">    
         <span *ngIf="dashboards && dashboards.length">      
                    <nvd3 [options]="bpOptions" [data]="bpData"               
@@ -61,13 +62,14 @@
                 <td>
                     <div *ngIf="dashboard.warehouseOutgId">
                         <a [routerLink]="['../third-stock-and-sales-utility', dashboard.warehouseOutgId  ]" >{{dashboard.warehouseOutgName}}
-                            {{dashboard.warehouseOutgId}} </a>   
+                            {{dashboard.warehouseOutgId}} 
+                        </a>   
                                             </div>
                 </td>
                 <td>
                     <div *ngIf="dashboard.materialTypeDefDashboardId">
                         <a [routerLink]="['../materialclassification-stock-and-sales-utility', dashboard.materialTypeDefDashboardId  ]" > {{dashboard.materialTypeDefDashboardCode}}
-                            {{dashboard.materialTypeDefDashboardId}}
+                          {{dashboard.materialTypeDefDashboardId}}
                         </a> 
                                         </div>
                 </td>
