@@ -2,19 +2,19 @@
     "matv53App": {
         "materialhistory" : {
             "home": {
-                "title": "Materialhistories",
-                "createLabel": "Créer un nouveau Materialhistory",
-                "createOrEditLabel": "Créer ou éditer un Materialhistory",
-                "search": "Recherche pour Materialhistory"
+                "title": "Transfers",
+                "createLabel": "Créer un nouveau Transfer",
+                "createOrEditLabel": "Créer ou éditer un Transfer",
+                "search": "Recherche pour Transfer"
             },
-            "created": "Un nouveau Materialhistory a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Materialhistory avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Materialhistory avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouveau Transfer a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Transfer avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Transfer avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Materialhistory {{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer le Transfer {{ id }} ?"
             },
             "detail": {
-                "title": "Materialhistory"
+                "title": "Transfer"
             },
             "code": "Code",
             "creationDate": "Creation Date",

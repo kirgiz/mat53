@@ -18,6 +18,7 @@ import {MaterialStockAndSalesUtilityService, MaterialStockAndSalesUtility} from 
 
 @Injectable()
 export class DashboardStockAndSalesUtilityService {
+    private   dashboardMap: Observable<Map<String , DashboardStockAndSalesUtility>> = new Observable(); // Map<String , DashboardStockAndSalesUtility>()
 
     private resourceUrl = SERVER_API_URL + 'api/dashboards';
     private resourceSearchUrl = SERVER_API_URL + 'api/_search/dashboards';
@@ -107,8 +108,136 @@ queryFxRate(req?: any): Observable<ResponseWrapper> {
         const copy: DashboardStockAndSalesUtility = Object.assign({}, dashboard);
         if (convertDate) { copy.transferDate = this.dateUtils
             .convertLocalDateToServer(dashboard.transferDate);
+            
         }
         else {copy.transferDate = dashboard.transferDate;}
                 return copy;
     }
+
+     getDashboard():Observable<ResponseWrapper>{
+
+      let    summary: Map<any, any>;
+      let    transfers: MaterialhistoryStockAndSalesUtility[];
+      let    forexRates: ForexratesStockAndSalesUtility[];
+      let    dashboards: DashboardStockAndSalesUtility[];
+      let    lots: LotStockAndSalesUtility[];
+      let    material: MaterialStockAndSalesUtility[];
+      let   dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String , DashboardStockAndSalesUtility>();
+    
+forexRates = new Array<ForexratesStockAndSalesUtility>();
+      this.queryFxRate().subscribe(
+          (res: ResponseWrapper) => {
+            let  forexRates: ForexratesStockAndSalesUtility[];
+              forexRates = res.json;           
+          }
+          ,()=>console.log('err'), ()=> 
+          {   
+            if (forexRates !== undefined) {
+                for (const fx of forexRates) {
+                }
+            }               
+            material = new  Array<MaterialStockAndSalesUtility>();
+            this.queryMaterial().take(1).subscribe(
+                 (resmat: ResponseWrapper) => {
+                     material = resmat.json;
+             },()=>console.log('err'), ()=> {
+                this.queryMaterialHistory().subscribe((res:ResponseWrapper)=> 
+                {transfers = res.json;},
+                ()=>console.log('gfdgdfg'),
+                () => {dashboards=new Array<DashboardStockAndSalesUtility>();
+                  console.log('length');console.log(transfers.length);
+                summary = new Map();                
+                            dashboards = new Array<DashboardStockAndSalesUtility>();
+                            for (const materialTransfer of transfers) {
+                                               const transferDate: Date = new Date(materialTransfer.creationDate);
+                                               const transferDateYYYYMM = parseInt((String)(transferDate.getFullYear().toString()).concat((String)(transferDate.getMonth().toString())), 10);
+                                              const  key = (String)(transferDateYYYYMM.toString()).concat((String)(materialTransfer.warehousefromId.toString()));
+                                                 key.concat(materialTransfer.transferClassifId.toString());
+                                                 key.concat(materialTransfer.toString());                                                                     
+                                                if (dashboardMap.has(key)) {
+                                                    const transferSummary: DashboardStockAndSalesUtility = dashboardMap.get(key);
+                                                      transferSummary.numberOfItems = transferSummary.numberOfItems + 1;
+                                                      transferSummary.profitAndLoss = transferSummary.profitAndLoss + materialTransfer.price *
+                                                      this.getForexRate(materialTransfer.outgccyId , materialTransfer.creationDate,forexRates);
+                                                      transferSummary.warehouseOutgId = materialTransfer.warehousefromId;
+                                                      dashboardMap.set(key, transferSummary);
+                                } else {          
+                                    let matclassif: number;
+                                    for (const material1 of materialTransfer.itemTransfereds){
+                                    for (const mat of material) {
+                                        if (material1.id===mat.id)
+                                        {matclassif=mat.materialClassifId
+                                        break;
+                                    }}
+                                      }                         
+                                    const currentSummary: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(
+                                                                        transferDateYYYYMM, materialTransfer.creationDate,
+                                                                         materialTransfer.price   *
+                                        this.getForexRate(materialTransfer.outgccyId , materialTransfer.creationDate,forexRates),
+                                         1, materialTransfer.outgccyId, materialTransfer.warehousefromId
+                                        , matclassif);
+                                        currentSummary.warehouseOutgId = materialTransfer.warehousefromId
+                                        dashboardMap.set(key, currentSummary);  
+                                            }       
+                            } 
+                            for (const dashboardItem of Array.from(dashboardMap.values())) {
+                              dashboardItem.profitAndLoss = dashboardItem.profitAndLoss / dashboardItem.numberOfItems;
+                            dashboardItem.id = 1;
+                            console.log(dashboardItem.warehouseOutgId);
+                            }  
+                            console.log(JSON.stringify(Array.from(dashboardMap.values()))); 
+             });}
+        );                                               
+  });
+    
+console.log(JSON.stringify(Array.from(dashboardMap.values())));
+return Observable.of(new ResponseWrapper(null, JSON.stringify(Array.from(dashboardMap.values())), null));                 
+
+} 
+
+ map(source, project) {
+    let  forexRates; //: ForexratesStockAndSalesUtility[];
+    return new Observable((observer) => {
+       {} this.queryFxRate().subscribe(
+            (res: ResponseWrapper) => {
+                forexRates = res.json;           
+            }
+            ,()=>console.log('err'), ()=> observer.next(forexRates) 
+        )
+    /*  const mapObserver = {
+        next: (x) => observer.next(project(x)),
+        error: (err) => observer.error(err),
+        complete: () => observer.complete()
+      };*/
+      return source.subscribe(forexRates);
+    });
+  }
+
+   map1(source: Observable<ResponseWrapper>) :Observable<ResponseWrapper>{
+    return new Observable((observer) => {
+      const mapObserver = {
+        next: (x) => observer.next(x),
+        error: (err) => observer.error(err),
+        complete: () => observer.complete()
+      };
+      return source.subscribe(mapObserver);
+    });
+  }
+
+private getForexRate(currencyId: number, date: Date, forexRates: ForexratesStockAndSalesUtility[] ): number {
+    let rate: number;
+    let rateDate: Date;
+    for (const forex of forexRates) {
+        console.log('dfhdhghgh');
+        console.log(forex.rateDate);
+        console.log(forex.rateForCurrencyId);
+if ((rateDate === undefined || rateDate >= forex.rateDate) && forex.rateForCurrencyId === currencyId &&
+forex.rateDate <= date) {
+rateDate = forex.rateDate;
+rate = forex.straighRate;
+}
+    }
+    return rate;
+}
+
 }

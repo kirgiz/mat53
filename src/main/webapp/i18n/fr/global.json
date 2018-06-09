@@ -22,7 +22,6 @@
                 "materialStockAndSalesUtility": "Matériel",               
                 "materialhistoryStockAndSalesUtility": "Transfers",
                 "dashboardStockAndSalesUtility": "Tableau de bord",
-                "materialhistoryStockAndSalesUtility": "Materialhistory",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"               
             },
             "account": {

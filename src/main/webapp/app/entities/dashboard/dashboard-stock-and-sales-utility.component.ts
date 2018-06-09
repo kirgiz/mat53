@@ -44,171 +44,30 @@ bpData: any= {};
     }
 
     loadAll() {
-       this.forexRates = new Array<ForexratesStockAndSalesUtility>();
-        this.dashboardService.queryFxRate().subscribe(
-            (res: ResponseWrapper) => {
-              let  forexRates: ForexratesStockAndSalesUtility[];
-                forexRates = res.json;
-                if (forexRates !== undefined) {
-                for (const fx of forexRates) {
-                this.forexRates.push(new ForexratesStockAndSalesUtility(fx.id,fx.rateDate,fx.straighRate,fx.rateForCurrencyId));
-                }
-            }
-            }
+        this.dashboardService.map1(this.dashboardService.queryFxRate()).subscribe(
+            (res: ResponseWrapper) =>  console.log(res.json),()=>console.log('Errorfx')
         );
-
-        this.material = new  Array<MaterialStockAndSalesUtility>();
-        this.dashboardService.queryMaterial().take(1).subscribe(
-            (resmat: ResponseWrapper) => {
-                this.material = resmat.json;
-          //   console.log('AAAAAAAAAAA');
-           // console.log(this.material.);
-        },()=>console.log('err'), ()=> {console.log('completed')});
-
-        this.dashboardService.query().subscribe((res:ResponseWrapper) => {
-            this.dashboards=res.json;
-            for (const dashboardItem of  this.dashboards){
-                this.dashboardService.delete(dashboardItem.id);
-            }
-        },()=>console.log('Error'),()=>this.dashboards=new Array<DashboardStockAndSalesUtility>());
-        this.dashboardService.queryMaterialHistory().subscribe((res:ResponseWrapper)=> 
-        {this.transfers = res.json;},
-        ()=>console.log('gfdgdfg'),
-        () => {console.log('length');console.log(this.transfers.length);
-        this.summary = new Map();
         
-                    this.dashboards = new Array<DashboardStockAndSalesUtility>();
-                    for (const materialTransfer of this.transfers) {
-                                       const transferDate: Date = new Date(materialTransfer.creationDate);
-                                       const transferDateYYYYMM = parseInt((String)(transferDate.getFullYear().toString()).concat((String)(transferDate.getMonth().toString())), 10);
-                                      // console.log((String)(transferDate.getFullYear().toString()));
-                                      const  key = (String)(transferDateYYYYMM.toString()).concat((String)(materialTransfer.warehousefromId.toString()));
-                                         key.concat(materialTransfer.transferClassifId.toString());
-                                         key.concat(materialTransfer.toString());
-                                  
-                                       // console.log(material.id);
-                                       
-                                        if (this.dashboardMap.has(key)) {
-                                         //   console.log('jaskey');
-                                        //    console.log(key);
-                                            const transferSummary: DashboardStockAndSalesUtility = this.dashboardMap.get(key);
-                                              transferSummary.numberOfItems = transferSummary.numberOfItems + 1;
-                                              transferSummary.profitAndLoss = transferSummary.profitAndLoss + materialTransfer.price *
-                                              this.getForexRate(materialTransfer.outgccyId , materialTransfer.creationDate);
-                                              transferSummary.warehouseOutgId = materialTransfer.warehousefromId;
-                                              this.dashboardMap.set(key, transferSummary);
-                        } else {
-                        //    console.log('nokey');
-                       //     console.log(key);
-                            let matclassif: number;
-                            for (const material of materialTransfer.itemTransfereds){
-                            for (const mat of this.material) {
-                                if (material.id===mat.id)
-                                {matclassif=mat.materialClassifId
-                                break;
-                            }}
-                              }
-                           
-                            const currentSummary: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(
-                                                                transferDateYYYYMM, materialTransfer.creationDate,
-                                                                 materialTransfer.price   *
-                                this.getForexRate(materialTransfer.outgccyId , materialTransfer.creationDate),
-                                 1, materialTransfer.outgccyId, materialTransfer.warehousefromId
-                                , matclassif);
-                                currentSummary.warehouseOutgId = materialTransfer.warehousefromId
-                                this.dashboardMap.set(key, currentSummary);
-                        
-                                        
-                                    }
-                                            
-                    }
+        this.dashboardService.getDashboard().subscribe((res: ResponseWrapper) => 
+        {this.dashboards = new Array<DashboardStockAndSalesUtility>();
+            this.onSuccess(res.json, res.headers);},
+        (res: ResponseWrapper) => this.onError(res.json),()=>this.buildGraph());
 
-                    this.currentSearch = '';
-                    let systolics, diastolics, upperValues, lowerValues;
-                    systolics = [];
-                    diastolics = [];
-                    upperValues = [];
-                    lowerValues = [];
-                    console.log('TTTTTTTTTTTTTTTT');
-                    console.log(this.dashboardMap.size);
-        
-                    for (const dashboardItem of Array.from(this.dashboardMap.values())) {
-                        dashboardItem.profitAndLoss = dashboardItem.profitAndLoss / dashboardItem.numberOfItems;
-                      dashboardItem.id = null;
-                      console.log(dashboardItem.warehouseOutgId);
-                            this.dashboardService.create(dashboardItem, false).subscribe(
-                                (res1: DashboardStockAndSalesUtility) => {
-                                const dash: DashboardStockAndSalesUtility = res1;
-                                 this.dashboards.push(dash);
-                                // this.bloodPressureService.last30Days().subscribe((bpReadings: any) => {
-                                //    this.bpReadings = bpReadings;
-                                    this.bpOptions = {... D3ChartService.getChartConfig() };
-                                    this.bpOptions.title.text = 'Haaaa';
-                                    this.bpOptions.chart.yAxis.axisLabel = 'Ventes';
-                                 //  if (bpReadings.readings.length) {
-                                    
-                                  //  bpReadings.readings.forEach((item) => {
-                                    systolics.push({
-                                    x: dashboardItem.transferDate,
-                                    y: dashboardItem.numberOfItems
-                                    });
-                                    console.log('kkkkkkkkkk');
-                                    console.log(dashboardItem.numberOfItems);
-                                    console.log(dashboardItem.transferDate);
-
-
-
-                                   /* diastolics.push({
-                                    x: dashboardItem.transferDate,
-                                    y: dashboardItem.profitAndLoss
-                                    });*/
-                                    upperValues.push(dashboardItem.numberOfItems);
-                                    lowerValues.push(0);
-                                   // });
-                                    this.bpData = [{
-                                    values: systolics,
-                                    key: 'Ventes',
-                                    color: '#673ab7'
-                                    }, /*{
-                                    values: diastolics,
-                                    key: 'Diastolic',
-                                    color: '#03a9f4'
-                                    }*/];
-                                    // set y scale to be 10 more than max and min
-                                    this.bpOptions.chart.yDomain =
-                                    [Math.min.apply(Math, lowerValues) - 0,
-                                    Math.max.apply(Math, upperValues) + 10];
-                                  //  } else {
-                                   // this.bpReadings.readings = [];
-                                 //   }
-                                   // });
-                             },
-                               (res1: ResponseWrapper) => this.onError(res1.json));
-                      }
-   
-    
-    }
-    );
-
-    /*    this.dashboardService.queryMaterialHistory().subscribe(
-            (res: ResponseWrapper) => {
-               // this.transfers = res.json;
- 
-            },
-            (res: ResponseWrapper) => this.onError(res.json),
-           () =>console.log('HHHHHH')
-            
-        );*/
-        this.dashboardService.query().subscribe();
+      /*  this.currencyService.query({
+            page: this.page,
+            size: this.itemsPerPage,
+            sort: this.sort()
+        }).subscribe(
+            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );*/        
     }
 
-    private getForexRate(currencyId: number, date: Date ): number {
+  /*  private getForexRate(currencyId: number, date: Date ): number {
         let rate: number;
         let rateDate: Date;
         for (const forex of this.forexRates) {
             console.log('dfhdhghgh');
-          /*  console.log(date);
-            console.log(currencyId);*/
             console.log(forex.rateDate);
             console.log(forex.rateForCurrencyId);
 if ((rateDate === undefined || rateDate >= forex.rateDate) && forex.rateForCurrencyId === currencyId &&
@@ -217,11 +76,11 @@ forex.rateDate <= date) {
     rate = forex.straighRate;
     console.log('aaaaaaaaaaa');
 }
-        }
-        return rate;
+}
+return rate;
     }
 
-    private subscribeToSaveResponse(result: Observable<DashboardStockAndSalesUtility>) {
+   private subscribeToSaveResponse(result: Observable<DashboardStockAndSalesUtility>) {
         result.subscribe((res: DashboardStockAndSalesUtility) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError());
     }
@@ -234,7 +93,47 @@ forex.rateDate <= date) {
     
     private onSaveError() {
         this.isSaving = false;
-    }
+    }*/
+
+    private onSuccess(data, headers) {
+        console.log(data);
+        console.log(data.length);
+        for (let i = 0; i < data.length; i++) {
+            this.dashboards.push(data[i]);
+        }
+    }        
+
+    private buildGraph(){
+        for (let i = 0; i < this.dashboards.length; i++) {        
+        let systolics, diastolics, upperValues, lowerValues;
+        systolics = [];
+        diastolics = [];
+        upperValues = [];
+        lowerValues = [];
+        console.log('TTTTTTTTTTTTTTTT');
+        console.log(this.dashboardMap.size);
+                        this.bpOptions = {... D3ChartService.getChartConfig() };
+                        this.bpOptions.title.text = 'Haaaa';
+                        this.bpOptions.chart.yAxis.axisLabel = 'Ventes';
+                        systolics.push({
+                        x: this.dashboards[i].transferDate,
+                        y: this.dashboards[i].numberOfItems
+                        });
+                        console.log('kkkkkkkkkk');
+                        console.log(this.dashboards[i].numberOfItems);
+                        console.log(this.dashboards[i].transferDate);
+                        upperValues.push(this.dashboards[i].numberOfItems)
+                        lowerValues.push(0);
+                        this.bpData = [{
+                        values: systolics,
+                        key: 'Ventes',
+                        color: '#673ab7'
+                        }, ];
+                        // set y scale to be 10 more than max and min
+                        this.bpOptions.chart.yDomain =
+                        [Math.min.apply(Math, lowerValues) - 0,
+                        Math.max.apply(Math, upperValues) + 10];    }
+                    }
 
     search(query) {
         if (!query) {
