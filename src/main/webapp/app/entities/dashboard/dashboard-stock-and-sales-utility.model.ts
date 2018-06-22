@@ -8,7 +8,9 @@ export class DashboardStockAndSalesUtility implements BaseEntity {
         public numberOfItems?: number,
         public currency?: number,
         public warehouseOutgId?: number,
+        public warehouseOutgName?: string,
         public materialTypeDefDashboardId?: number,
+        public materialTypeDefDashboardCode?: string
     ) {
     }
 }

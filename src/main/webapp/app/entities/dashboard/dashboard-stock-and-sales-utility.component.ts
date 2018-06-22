@@ -22,10 +22,10 @@ import { D3ChartService } from './D3ChartService';
 })
 export class DashboardStockAndSalesUtilityComponent implements OnInit, OnDestroy {
     isSaving: boolean;
-    summary: Map<any, any>;
+    summary: Map<any, any>;66666666
     transfers: MaterialhistoryStockAndSalesUtility[];
     forexRates: ForexratesStockAndSalesUtility[];
-    dashboards: DashboardStockAndSalesUtility[];
+    dashboards: DashboardStockAndSalesUtility[]= new Array<DashboardStockAndSalesUtility>();
     lots: LotStockAndSalesUtility[];
     material: MaterialStockAndSalesUtility[];
     company: CompanyStockAndSalesUtility[];
@@ -50,14 +50,15 @@ bpData: any= {};
     }
 
     loadAll() {
-        this.dashboardService.map1(this.dashboardService.queryFxRate()).subscribe(
+       /* this.dashboardService.map1(this.dashboardService.queryFxRate()).subscribe(
             (res: ResponseWrapper) =>  console.log(res.json),()=>console.log('Errorfx')
-        );
-        
+        );*/
+      //  this.dashboards 
         this.dashboardService.getDashboard().subscribe((res: ResponseWrapper) => 
-        {this.dashboards = new Array<DashboardStockAndSalesUtility>();
-            this.onSuccess(res.json, res.headers);},
-        (res: ResponseWrapper) => this.onError(res.json),()=>this.buildGraph());
+        {   this.onSuccess(res.json, res.headers);
+        },
+        (res: ResponseWrapper) => this.onError(res.json)//,()=>this.buildGraph()
+    );
 
       /*  this.currencyService.query({
             page: this.page,
@@ -217,7 +218,6 @@ forex.rateDate <= date) {
 return rate;
     }
 
-<<<<<<< HEAD
    private subscribeToSaveResponse(result: Observable<DashboardStockAndSalesUtility>) {
         result.subscribe((res: DashboardStockAndSalesUtility) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError());
@@ -234,11 +234,9 @@ return rate;
     }*/
 
     private onSuccess(data, headers) {
-        console.log(data);
+        console.log(JSON.stringify(data));
         console.log(data.length);
-        for (let i = 0; i < data.length; i++) {
-            this.dashboards.push(data[i]);
-        }
+        this.dashboards=data;
     }        
 
     private buildGraph(){
@@ -272,25 +270,6 @@ return rate;
                         [Math.min.apply(Math, lowerValues) - 0,
                         Math.max.apply(Math, upperValues) + 10];    }
                     }
-=======
-
-    private getMaterialPNLInBaseCurrency(lotid: number, dateTransfer: Date, price: number, currencyId: number ): number {
-        let pnl: number;
-        let rateDate: Date;
-        for (const lot of this.lots) {
-            if (lot.id === lotid)
-            {
-                if (lot.buycurrencylotId === this.company[1].baseCurrencyId) {
-pnl = price - lot.unitBuyPrice;
-                }
-                else {
-                    pnl = price * this.getForexRate(currencyId, dateTransfer ) - lot.unitBuyPrice;
-                }
-            }
-        }
-        return pnl;
-    }
->>>>>>> 603478f9c51f77b9fcc3be08ddf2a62b1f941ae0
 
       search(query) {
         if (!query) {

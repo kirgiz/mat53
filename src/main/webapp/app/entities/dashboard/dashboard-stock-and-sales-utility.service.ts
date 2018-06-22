@@ -132,8 +132,33 @@ return this.lotService.query();
       let    lots: LotStockAndSalesUtility[];
       let    material: MaterialStockAndSalesUtility[];
       let   dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String , DashboardStockAndSalesUtility>();
-    
+
+
+      const transferSummary: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(
+        1,new Date(),12,1,1001,1401,'SHOP 1',1251, 'MATERIEL1');
+
+
 forexRates = new Array<ForexratesStockAndSalesUtility>();
+      this.queryFxRate().subscribe(
+          (res: ResponseWrapper) => {
+            let  forexRates: ForexratesStockAndSalesUtility[];
+              forexRates = res.json;           
+          }
+          ,()=>console.log('err'));
+
+
+          material = new  Array<MaterialStockAndSalesUtility>();
+          this.queryMaterial().take(1).subscribe(
+               (resmat: ResponseWrapper) => {
+                   material = resmat.json;
+           },()=>console.log('err'));
+
+           this.queryMaterialHistory().subscribe((res:ResponseWrapper)=> 
+           {transfers = res.json;},
+           ()=>console.log('gfdgdfg'));
+
+    
+/*forexRates = new Array<ForexratesStockAndSalesUtility>();
       this.queryFxRate().subscribe(
           (res: ResponseWrapper) => {
             let  forexRates: ForexratesStockAndSalesUtility[];
@@ -185,7 +210,7 @@ forexRates = new Array<ForexratesStockAndSalesUtility>();
                                         this.getForexRate(materialTransfer.outgccyId , materialTransfer.creationDate,forexRates),
                                          1, materialTransfer.outgccyId, materialTransfer.warehousefromId
                                         , matclassif);
-                                        currentSummary.warehouseOutgId = materialTransfer.warehousefromId
+                                        currentSummary.warehouseOmyObservableutgId = materialTransfer.warehousefromId
                                         dashboardMap.set(key, currentSummary);  
                                             }       
                             } 
@@ -197,10 +222,12 @@ forexRates = new Array<ForexratesStockAndSalesUtility>();
                             console.log(JSON.stringify(Array.from(dashboardMap.values()))); 
              });}
         );                                               
-  });
-    
-console.log(JSON.stringify(Array.from(dashboardMap.values())));
-return Observable.of(new ResponseWrapper(null, JSON.stringify(Array.from(dashboardMap.values())), null));                 
+  });*/
+  dashboardMap.set('11',transferSummary);
+  dashboardMap.set('12',transferSummary);
+   //   console.log(JSON.stringify(Array.from(dashboardMap.values())));
+  // console.log(JSON.stringify(myObservable));
+return Observable.of(new ResponseWrapper(null, Array.from(dashboardMap.values()), null)); //myObservable; //Observable.of(new ResponseWrapper(null, JSON.stringify(Array.from(dashboardMap.values())), null));                 
 
 } 
 

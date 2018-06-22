@@ -141,6 +141,9 @@ currentAccount: any;
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.materialhistories = data;
+        console.log( 'HAAAAAAAAAaa' );
+            console.log( this.materialhistories );
+    
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);

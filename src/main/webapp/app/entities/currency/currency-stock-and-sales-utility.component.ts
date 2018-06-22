@@ -135,6 +135,7 @@ export class CurrencyStockAndSalesUtilityComponent implements OnInit, OnDestroy 
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         for (let i = 0; i < data.length; i++) {
+            console.log(JSON.stringify(data[i]));
             this.currencies.push(data[i]);
         }
     }

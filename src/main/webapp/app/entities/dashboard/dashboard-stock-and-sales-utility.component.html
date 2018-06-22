@@ -25,24 +25,24 @@
               </form>
           </div>
       </div> -->
-      <div class="row">     <div class="col-md-11">    
+        <!--  <div class="row">     <div class="col-md-11">    
         <span *ngIf="dashboards && dashboards.length">      
                    <nvd3 [options]="bpOptions" [data]="bpData"               
                        class="with-3d-shadow with-transitions"></nvd3>       
                       </span>         <ngb-alert [dismissible]="false"           
                         [hidden]="dashboards && dashboards.length">        
                              <span >             
-                                     No blood pressure readings found.           
+                                     No material movements found      
                                       </span>         </ngb-alert> 
                                         </div> 
-                                </div>
+                                </div>-->
       
     <br/>
     <div class="table-responsive" *ngIf="dashboards">
         <table class="table table-striped" width="400px">
             <thead>
             <tr>
-             <!--     <th><span jhiTranslate="global.field.id">ID</span></th> -->
+            <!--     <th><span jhiTranslate="global.field.id">ID</span></th>  -->
             <th><span jhiTranslate="matv53App.dashboard.transferDate">Transfer Date</span></th>
             <th><span jhiTranslate="matv53App.dashboard.profitAndLoss">Profit And Loss</span></th>
             <th><span jhiTranslate="matv53App.dashboard.numberOfItems">Number Of Items</span></th>
@@ -53,23 +53,24 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let dashboard of dashboards ;trackBy: trackId">
-                <!--      <td><a [routerLink]="['../dashboard-stock-and-sales-utility', dashboard.id ]">{{dashboard.id}}</a></td> -->
+            <tr *ngFor="let dashboard of dashboards ;trackBy: trackId">              
+                <!-- ;trackBy: trackId    -->
+                  <!--    <td><a [routerLink]="['../dashboard-stock-and-sales-utility', dashboard.id ]">{{dashboard.id}}</a></td>  -->
                 <td>{{dashboard.transferDate | date:'mediumDate'}}</td>
                 <td>{{dashboard.profitAndLoss}}</td>
                 <td>{{dashboard.numberOfItems}}</td>
                 <td>{{dashboard.currency}}</td>
-                <td>
+                 <td>
                     <div *ngIf="dashboard.warehouseOutgId">
                         <a [routerLink]="['../third-stock-and-sales-utility', dashboard.warehouseOutgId  ]" >{{dashboard.warehouseOutgName}}
-                            {{dashboard.warehouseOutgId}} 
+                         <!--     {{dashboard.warehouseOutgId}}   -->
                         </a>   
                                             </div>
                 </td>
                 <td>
                     <div *ngIf="dashboard.materialTypeDefDashboardId">
                         <a [routerLink]="['../materialclassification-stock-and-sales-utility', dashboard.materialTypeDefDashboardId  ]" > {{dashboard.materialTypeDefDashboardCode}}
-                          {{dashboard.materialTypeDefDashboardId}}
+                       <!--     {{dashboard.materialTypeDefDashboardId}}   -->
                         </a> 
                                         </div>
                 </td>
