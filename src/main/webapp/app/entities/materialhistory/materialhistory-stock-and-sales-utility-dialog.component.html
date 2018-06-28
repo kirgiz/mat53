@@ -66,6 +66,9 @@
             <select class="form-control" id="field_itemTransfered" multiple name="itemTransfered" [(ngModel)]="materialhistory.itemTransfereds">
                 <option [ngValue]="getSelected(materialhistory.itemTransfereds, materialOption)" *ngFor="let materialOption of materials; trackBy: trackMaterialById">{{materialOption.id}}</option>
             </select>
+            <button type="submit"  class="btn btn-primary" (click)="onClickMe()"> 
+                <span class="fa fa-save"></span>&nbsp;<span >Materials     {{clickMessage}}</span>            
+            </button>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="matv53App.materialhistory.transferClassif" for="field_transferClassif">Transfer Classif</label>

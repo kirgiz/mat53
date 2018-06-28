@@ -33,6 +33,8 @@ export class MaterialhistoryStockAndSalesUtilityDialogComponent implements OnIni
     currencies: CurrencyStockAndSalesUtility[];
     creationDateDp: any;
 
+    clickMessage = '';
+
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
@@ -117,6 +119,10 @@ export class MaterialhistoryStockAndSalesUtilityDialogComponent implements OnIni
         }
         return option;
     }
+
+    onClickMe() {
+        this.clickMessage = 'You are my hero!';
+      }
 }
 
 @Component({

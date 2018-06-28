@@ -81,6 +81,10 @@ queryLot(req?: any): Observable<ResponseWrapper>{
 return this.lotService.query();
 }
 
+queryThird(req?: any): Observable<ResponseWrapper>{
+    return this.thirdService.query();
+    }
+
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
@@ -126,23 +130,115 @@ return this.lotService.query();
      getDashboard():Observable<ResponseWrapper>{
 
       let    summary: Map<any, any>;
+      let   company: CompanyStockAndSalesUtility[];
       let    transfers: MaterialhistoryStockAndSalesUtility[];
       let    forexRates: ForexratesStockAndSalesUtility[];
       let    dashboards: DashboardStockAndSalesUtility[];
       let    lots: LotStockAndSalesUtility[];
       let    material: MaterialStockAndSalesUtility[];
+      let thirds: ThirdStockAndSalesUtility[];
       let   dashboardMap: Map<String , DashboardStockAndSalesUtility> = new Map<String , DashboardStockAndSalesUtility>();
-
 
       const transferSummary: DashboardStockAndSalesUtility = new DashboardStockAndSalesUtility(
         1,new Date(),12,1,1001,1401,'SHOP 1',1251, 'MATERIEL1');
 
 
 forexRates = new Array<ForexratesStockAndSalesUtility>();
-      this.queryFxRate().subscribe(
+
+Observable.forkJoin(
+    this.queryFxRate(),
+this.queryMaterial(),
+this.queryMaterialHistory(),
+this.queryLot(),
+this.queryCompany(),
+this.queryThird()
+).subscribe(
+    ([resfx, resmat,restrans,reslot,rescompany,resthird])=>
+{forexRates = resfx.json;
+material = resmat.json;
+transfers = restrans.json;
+lots=reslot.json,company
+company=rescompany.json
+thirds=resthird.json},
+()=>console.log('err'),()=> {     
+    console.log('yyyyyyyyyyy');    
+   // console.log(JSON.stringify( forexRates));
+  //  console.log(JSON.stringify( material));
+    console.log(JSON.stringify( transfers));
+  //  console.log(JSON.stringify( lots));
+ //   console.log(JSON.stringify( company));
+  //  console.log(JSON.stringify( thirds));
+    console.log('yyyyyyyyyyy');
+    dashboardMap=this.buildDashboardArray(  
+        company,
+           transfers,
+               forexRates,
+               dashboards,
+               lots,
+               material,
+            thirds)
+
+}
+);
+
+dashboardMap.set('11',transferSummary);
+dashboardMap.set('12',transferSummary);
+return Observable.of(new ResponseWrapper(null, Array.from(dashboardMap.values()), null));
+} 
+
+private  buildDashboardArray(  
+ company: CompanyStockAndSalesUtility[],
+    transfers: MaterialhistoryStockAndSalesUtility[],
+        forexRates: ForexratesStockAndSalesUtility[],
+        dashboards: DashboardStockAndSalesUtility[],
+        lots: LotStockAndSalesUtility[],
+        material: MaterialStockAndSalesUtility[],
+     thirds: ThirdStockAndSalesUtility[]) :Map<String , DashboardStockAndSalesUtility>
+     {
+         let dashboardData:Map<String , DashboardStockAndSalesUtility>=new Map<String , DashboardStockAndSalesUtility>();
+         let transfersByOutgoingThird:Map<number , MaterialhistoryStockAndSalesUtility[]>=new Map<number , MaterialhistoryStockAndSalesUtility[]>();
+let  transfers2: MaterialhistoryStockAndSalesUtility[];
+
+         thirds.forEach((third)=> 
+        {
+            transfers2=transfers.filter(transfer=>
+                third.id===transfer.warehousefromId
+            );
+            transfersByOutgoingThird.set(third.id,transfers2);
+        }
+        );
+
+      /*  transfersByOutgoingThird.forEach((transfer) => {
+            transfer.forEach(trans=>)
+        }
+    )*/
+        
+         
+   console.log('ooooooooooo' );
+   console.log(JSON.stringify(dashboardData));
+   console.log('ooooooooooo' );
+ return dashboardData;
+     }
+
+
+private groupByDateAndTransferType(transfers: MaterialhistoryStockAndSalesUtility[], groupingMonthAndTransferType: string){
+        return transfers.reduce(
+           (dashboardData:Map<String , DashboardStockAndSalesUtility>, obj) => {
+          var key = obj[groupingMonthAndTransferType];
+          if(!dashboardData[key]){
+            dashboardData[groupingMonthAndTransferType] = [];
+          }
+          dashboardData[key].push(obj);
+          return dashboardData;
+        }, {});
+      }
+
+   /*     this.queryFxRate().subscribe(
           (res: ResponseWrapper) => {
-            let  forexRates: ForexratesStockAndSalesUtility[];
-              forexRates = res.json;           
+         //   let  forexRates: ForexratesStockAndSalesUtility[];
+              forexRates = res.json;  
+              
+         //  console.log(JSON.stringify( forexRates));         
           }
           ,()=>console.log('err'));
 
@@ -157,11 +253,15 @@ forexRates = new Array<ForexratesStockAndSalesUtility>();
            {transfers = res.json;},
            ()=>console.log('gfdgdfg'));
 
+        console.log(JSON.stringify( forexRates));
+           console.log(JSON.stringify( material));
+           console.log(JSON.stringify(transfers));*/
+
     
 /*forexRates = new Array<ForexratesStockAndSalesUtility>();
       this.queryFxRate().subscribe(
           (res: ResponseWrapper) => {
-            let  forexRates: ForexratesStockAndSalesUtility[];
+            let  forexRates: ForexratesStockAndSalesUtility[]; dashboards = new Array<DashboardStockAndSalesUtility>();
               forexRates = res.json;           
           }
           ,()=>console.log('err'), ()=> 
@@ -172,7 +272,7 @@ forexRates = new Array<ForexratesStockAndSalesUtility>();
             }               
             material = new  Array<MaterialStockAndSalesUtility>();
             this.queryMaterial().take(1).subscribe(
-                 (resmat: ResponseWrapper) => {
+                 (resmat: ResponseWrapper) => { dashboards = new Array<DashboardStockAndSalesUtility>();
                      material = resmat.json;
              },()=>console.log('err'), ()=> {
                 this.queryMaterialHistory().subscribe((res:ResponseWrapper)=> 
@@ -223,42 +323,9 @@ forexRates = new Array<ForexratesStockAndSalesUtility>();
              });}
         );                                               
   });*/
-  dashboardMap.set('11',transferSummary);
-  dashboardMap.set('12',transferSummary);
-   //   console.log(JSON.stringify(Array.from(dashboardMap.values())));
-  // console.log(JSON.stringify(myObservable));
-return Observable.of(new ResponseWrapper(null, Array.from(dashboardMap.values()), null)); //myObservable; //Observable.of(new ResponseWrapper(null, JSON.stringify(Array.from(dashboardMap.values())), null));                 
 
-} 
 
- map(source, project) {
-    let  forexRates; //: ForexratesStockAndSalesUtility[];
-    return new Observable((observer) => {
-       {} this.queryFxRate().subscribe(
-            (res: ResponseWrapper) => {
-                forexRates = res.json;           
-            }
-            ,()=>console.log('err'), ()=> observer.next(forexRates) 
-        )
-    /*  const mapObserver = {
-        next: (x) => observer.next(project(x)),
-        error: (err) => observer.error(err),
-        complete: () => observer.complete()
-      };*/
-      return source.subscribe(forexRates);
-    });
-  }
 
-   map1(source: Observable<ResponseWrapper>) :Observable<ResponseWrapper>{
-    return new Observable((observer) => {
-      const mapObserver = {
-        next: (x) => observer.next(x),
-        error: (err) => observer.error(err),
-        complete: () => observer.complete()
-      };
-      return source.subscribe(mapObserver);
-    });
-  }
 
 private getForexRate(currencyId: number, date: Date, forexRates: ForexratesStockAndSalesUtility[] ): number {
     let rate: number;
